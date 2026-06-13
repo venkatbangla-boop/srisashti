@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# After final domain is ready, add:
+# Sitemap: https://your-domain.com/sitemap.xml
