@@ -1,13 +1,15 @@
-const CACHE_NAME = "sri-sashti-v29-live";
+const CACHE_NAME = "sri-sashti-v29-pwa";
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./assets/css/styles.css",
-  "./assets/js/app.js",
-  "./manifest.webmanifest",
-  "./assets/icons/logo-transparent.png",
-  "./assets/icons/icon-192.png",
-  "./assets/icons/icon-512.png"
+  "/",
+  "/index.html",
+  "/manifest.webmanifest",
+  "/assets/css/styles.css",
+  "/assets/js/app.js",
+  "/assets/icons/icon-192.png",
+  "/assets/icons/icon-512.png",
+  "/assets/icons/apple-touch-icon.png",
+  "/assets/icons/logo-transparent.png",
+  "/favicon.ico"
 ];
 
 self.addEventListener("install", event => {
@@ -22,11 +24,13 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+  if (new URL(event.request.url).origin !== self.location.origin) return;
   event.respondWith(
     caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+      if (!response.ok) return response;
       const copy = response.clone();
       caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
       return response;
-    }).catch(() => caches.match("./index.html")))
+    }).catch(() => caches.match("/index.html")))
   );
 });

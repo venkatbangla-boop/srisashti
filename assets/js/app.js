@@ -37,6 +37,31 @@ let lang = localStorage.getItem("ss_lang") || "en";
 let selectedProblem = "Back pain";
 let lastFocus = null;
 const animatedCounts = new WeakSet();
+let deferredInstallPrompt = null;
+
+function getInstallButtons() {
+  return [$("#installAppBtn"), $("#installAppBtnMobile")].filter(Boolean);
+}
+
+function updateInstallButtons() {
+  const buttons = getInstallButtons();
+  buttons.forEach(button => {
+    button.hidden = !deferredInstallPrompt;
+  });
+}
+
+async function promptInstall() {
+  if (!deferredInstallPrompt) return;
+  const promptEvent = deferredInstallPrompt;
+  deferredInstallPrompt = null;
+  updateInstallButtons();
+  promptEvent.prompt();
+  try {
+    await promptEvent.userChoice;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 function trackEvent(name) {
   if (!name) return;
@@ -213,6 +238,10 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("click", () => trackEvent(el.dataset.track));
   });
 
+  getInstallButtons().forEach(button => {
+    button.addEventListener("click", promptInstall);
+  });
+
   $("#bookingForm")?.addEventListener("submit", e => {
     e.preventDefault();
     const name = $("#name").value.trim();
@@ -259,8 +288,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setLanguage(lang);
   updateQuickResult("Back pain", false);
+  updateInstallButtons();
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./service-worker.js").catch(console.error);
+    navigator.serviceWorker.register("/service-worker.js").catch(console.error);
   }
+});
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  updateInstallButtons();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  updateInstallButtons();
 });
