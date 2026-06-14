@@ -148,7 +148,7 @@ button,input,select,textarea{font:inherit}
 .hero-inner{
   display:grid;
   gap:22px;
-  padding:28px 18px 18px;
+  padding:34px 18px 22px;
   max-width:var(--max);
   margin:auto;
 }
@@ -161,11 +161,11 @@ button,input,select,textarea{font:inherit}
   font-size:.76rem;
 }
 h1{
-  font-size:clamp(2.5rem,9vw,5.3rem);
-  line-height:.96;
+  font-size:clamp(2.3rem,8.2vw,5rem);
+  line-height:1.02;
   letter-spacing:-.06em;
   margin:14px 0 16px;
-  max-width:760px;
+  max-width:680px;
 }
 h2{
   font-size:clamp(1.75rem,6.3vw,3.2rem);
@@ -867,9 +867,17 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
     grid-template-columns:.92fr 1.08fr;
     align-items:center;
     gap:44px;
-    padding:58px 28px 46px;
+    padding:74px 28px 52px;
   }
-  .hero-copy p{font-size:1.1rem}
+  h1{
+    font-size:clamp(3.5rem,5.4vw,4.95rem);
+    line-height:.98;
+    max-width:620px;
+  }
+  .hero-copy p{
+    font-size:1.08rem;
+    max-width:560px;
+  }
   .hero-highlights{grid-template-columns:1fr 1fr}
   .hero-media{border-radius:42px;min-height:560px}
   .hero-media img{height:560px}
