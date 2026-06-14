@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v29-pwa";
+const CACHE_NAME = "sri-sashti-v29-pwa-logo";
 const ASSETS = [
   "/",
   "/index.html",

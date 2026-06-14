@@ -92,6 +92,8 @@ button,input,select,textarea{font:inherit}
   height:58px;
   object-fit:contain;
   filter:drop-shadow(0 8px 18px rgba(14,116,104,.16));
+  transform-origin:center;
+  animation:sashtiRunPulse 2.9s ease-in-out infinite;
 }
 .brand b{
   display:block;
@@ -184,6 +186,21 @@ button,input,select,textarea{font:inherit}
   transform-origin:center;
   animation:ambientDrift 18s ease-in-out infinite alternate;
   filter:saturate(1.04) contrast(1.02);
+}
+.hero-watermark{
+  position:absolute;
+  inset:18px auto auto 50%;
+  z-index:1;
+  transform:translateX(-8%) rotate(-10deg);
+  pointer-events:none;
+  opacity:.045;
+}
+.hero-watermark img{
+  width:min(42vw,340px);
+  height:auto;
+  filter:blur(.2px);
+  transform-origin:center;
+  animation:sashtiRunPulse 3.1s ease-in-out infinite;
 }
 .hero-inner{
   display:grid;
@@ -897,6 +914,16 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(-8px)}
 }
+@keyframes sashtiRunPulse{
+  0%,100%{
+    transform:translateX(0) scale(1);
+    filter:drop-shadow(0 0 0 rgba(0,107,95,0));
+  }
+  45%{
+    transform:translateX(4px) scale(1.025);
+    filter:drop-shadow(0 8px 14px rgba(0,107,95,.14));
+  }
+}
 @keyframes ambientDrift{
   0%{transform:scale(1.05) translate3d(0,0,0)}
   50%{transform:scale(1.08) translate3d(-1.4%,0,0)}
@@ -987,6 +1014,12 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   .hero-ambient{
     background-position:70% center;
   }
+  .hero-watermark{
+    inset:34px auto auto 54%;
+    opacity:.035;
+    transform:translateX(-6%) rotate(-10deg);
+  }
+  .hero-watermark img{width:min(46vw,220px)}
   .hero-stats,.doctor-metrics{grid-template-columns:1fr}
   .hero-actions,.review-actions,.branch-actions,.two{grid-template-columns:1fr}
 }
@@ -994,4 +1027,5 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 @media (prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
+  .brand img,.hero-watermark img{animation:none}
 }
