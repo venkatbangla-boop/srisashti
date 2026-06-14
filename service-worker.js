@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v30-gallery-images";
+const CACHE_NAME = "sri-sashti-v31-knee-card-fix";
 const ASSETS = [
   "/",
   "/index.html",
