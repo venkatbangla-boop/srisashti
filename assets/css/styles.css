@@ -651,13 +651,14 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .clinic-track{
   display:grid;
   grid-auto-flow:column;
-  grid-auto-columns:minmax(284px,84%);
+  grid-auto-columns:minmax(280px,86%);
   gap:14px;
   overflow-x:auto;
   padding-bottom:6px;
   scroll-snap-type:x mandatory;
   scrollbar-width:thin;
   scrollbar-color:rgba(14,116,104,.45) transparent;
+  overscroll-behavior-x:contain;
 }
 .moment-card,
 .care-gallery-card,
@@ -678,8 +679,9 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .care-gallery-card img,
 .clinic-card-slide img{
   width:100%;
-  height:220px;
+  height:230px;
   object-fit:cover;
+  object-position:center;
 }
 .moment-copy{
   padding:16px;
@@ -699,6 +701,10 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .visit-cards{
   display:grid;
   gap:14px;
+}
+.care-gallery-grid{
+  max-width:1140px;
+  margin:0 auto;
 }
 .visit-step,
 .visit-card{
@@ -1127,11 +1133,14 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   .program-grid{grid-template-columns:repeat(3,1fr)}
   .program-media img{height:290px}
   .moments-track,
-  .clinic-track{grid-auto-columns:minmax(300px,360px)}
-  .care-gallery-grid{grid-template-columns:repeat(3,1fr)}
+  .clinic-track{grid-auto-columns:320px}
+  .care-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .process-grid{grid-template-columns:repeat(5,1fr)}
   .visit-cards{grid-template-columns:repeat(3,1fr)}
   .journey-grid{grid-template-columns:repeat(3,1fr)}
+  .moment-card img,
+  .care-gallery-card img,
+  .clinic-card-slide img{height:250px}
   .journey-card img{height:240px}
   .doctor-card{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center}
   .doctor-visual{padding:36px 28px 0;min-height:100%}
