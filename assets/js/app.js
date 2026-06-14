@@ -30,6 +30,7 @@ const guides = {
 let lang = localStorage.getItem("ss_lang") || "en";
 let selectedProblem = "Back pain";
 let lastFocus = null;
+const animatedCounts = new WeakSet();
 
 function trackEvent(name) {
   if (!name) return;
@@ -133,6 +134,27 @@ function trapFocus(e) {
   }
 }
 
+function animateCount(el) {
+  if (!el || animatedCounts.has(el)) return;
+  animatedCounts.add(el);
+  const raw = (el.dataset.count || "").trim();
+  const target = Number.parseInt(raw, 10);
+  const suffix = raw.includes("%") ? "%" : "";
+  if (!Number.isFinite(target)) return;
+
+  const duration = 900;
+  const startTime = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = `${Math.round(target * eased)}${suffix}`;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   $("#year").textContent = new Date().getFullYear();
 
@@ -207,12 +229,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        if (entry.target.dataset.revealDelay) {
+          entry.target.style.transitionDelay = entry.target.dataset.revealDelay;
+        }
         entry.target.classList.add("show");
+        entry.target.querySelectorAll("[data-count]").forEach(animateCount);
         revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold:.12 });
   $$(".reveal").forEach(el => revealObserver.observe(el));
+
+  $$("[data-count]").forEach(el => {
+    const container = el.closest(".reveal");
+    if (!container) animateCount(el);
+  });
+
+  $$(".program-card.reveal, .journey-card.reveal, .review-grid article, .family-grid article").forEach((el, index) => {
+    el.dataset.revealDelay = `${Math.min(index * 70, 280)}ms`;
+    if (!el.classList.contains("reveal")) el.classList.add("reveal");
+    revealObserver.observe(el);
+  });
 
   setLanguage(lang);
   updateQuickResult("Back pain", false);
