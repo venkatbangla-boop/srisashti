@@ -167,6 +167,12 @@ h1{
   margin:14px 0 16px;
   max-width:680px;
 }
+html[lang="ta"] h1{
+  font-size:clamp(2rem,7vw,4.1rem);
+  line-height:1.05;
+  letter-spacing:-.04em;
+  max-width:720px;
+}
 h2{
   font-size:clamp(1.75rem,6.3vw,3.2rem);
   line-height:1.04;
@@ -874,9 +880,18 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
     line-height:.98;
     max-width:620px;
   }
+  html[lang="ta"] h1{
+    font-size:clamp(2.9rem,4.6vw,4rem);
+    line-height:1.03;
+    max-width:760px;
+  }
   .hero-copy p{
     font-size:1.08rem;
     max-width:560px;
+  }
+  html[lang="ta"] .hero-copy p{
+    font-size:1rem;
+    max-width:620px;
   }
   .hero-highlights{grid-template-columns:1fr 1fr}
   .hero-media{border-radius:42px;min-height:560px}
