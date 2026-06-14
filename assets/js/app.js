@@ -2,6 +2,18 @@
 const $ = (s, p=document) => p.querySelector(s);
 const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 
+const iconMarkup = {
+  "icon-call": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 4.5 9.8 7c.5.6.5 1.4-.1 1.9l-1.1 1c1 2.1 2.6 3.7 4.7 4.8l1.1-1.1c.5-.5 1.4-.6 1.9-.1l2.6 2.2c.6.5.7 1.4.2 2l-.9 1.3c-.5.7-1.4 1-2.2.8C10.2 18.4 5.6 13.8 4.2 8c-.2-.8.1-1.7.8-2.2l1.2-.9c.4-.4.9-.5 1.3-.4Z"/><path d="M14.5 5.5c2 .5 3.5 2 4 4"/><path d="M14.7 2.7c3.4.7 6 3.3 6.7 6.7"/></svg>',
+  "icon-whatsapp-chat": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5.3 18.7 6.2 15A7.5 7.5 0 1 1 9 17.7l-3.7 1Z"/><path d="M9.2 8.6c.3-.4.7-.4 1-.1l1 1.1c.2.2.2.6 0 .9l-.4.5c.5 1 1.3 1.8 2.3 2.3l.5-.4c.3-.2.7-.2.9 0l1.1 1c.3.3.3.7-.1 1-.5.5-1.2.7-2 .5-2.4-.6-4.3-2.5-4.9-4.9-.1-.7.1-1.4.6-1.9Z"/></svg>',
+  "icon-directions": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg>',
+  "icon-book-calendar": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="m9 15 2 2 4-4"/></svg>',
+  "icon-install-app": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v10"/><path d="m8 9 4 4 4-4"/><path d="M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>',
+  "icon-treatment": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 15h16"/><path d="M6 15v4h12v-4"/><path d="M8 15V9a4 4 0 0 1 8 0v6"/><path d="M12 7v4M10 9h4"/></svg>',
+  "icon-doctor": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/><path d="M9 12v4a3 3 0 0 0 6 0v-4"/><path d="M7 17h3M14 17h3"/></svg>',
+  "icon-branch": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 21V8l8-4 8 4v13"/><path d="M9 21v-6h6v6"/><path d="M9 10h2M13 10h2M9 13h2M13 13h2"/><path d="M12 6v3M10.5 7.5h3"/></svg>',
+  "icon-gallery": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.4"/><path d="m6 17 4-4 3 3 2-2 3 3"/></svg>'
+};
+
 const guides = {
   en: {
     "Back pain": ["Back pain care", "We check stiffness, posture strain and daily movement difficulty, then guide therapy and exercises."],
@@ -210,19 +222,59 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
+function hydrateIcons(root = document) {
+  $$(".icon", root).forEach(icon => {
+    const iconClass = [...icon.classList].find(name => iconMarkup[name]);
+    if (!iconClass) return;
+    if (icon.dataset.iconReady === "true") return;
+    icon.innerHTML = iconMarkup[iconClass];
+    icon.dataset.iconReady = "true";
+  });
+}
+
 function initAutoGalleries() {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const galleries = $$(".auto-gallery");
 
   galleries.forEach(gallery => {
+    if (gallery.dataset.galleryReady === "true") return;
     const track = $(".auto-gallery-track", gallery);
-    const slides = $$(".auto-gallery-slide", gallery);
+    const originalSlides = $$(".auto-gallery-slide", track);
     const prevBtn = $(".auto-gallery-prev", gallery);
     const nextBtn = $(".auto-gallery-next", gallery);
     const dotsWrap = $(".auto-gallery-dots", gallery);
-    if (!track || !slides.length || !dotsWrap) return;
+    if (!track || !originalSlides.length || !dotsWrap) return;
+
+    function prepareClone(slide) {
+      slide.classList.remove("reveal");
+      slide.classList.add("show");
+      slide.setAttribute("aria-hidden", "true");
+      $$("[id]", slide).forEach(el => el.removeAttribute("id"));
+      return slide;
+    }
+
+    if (originalSlides.length > 1) {
+      const firstClone = prepareClone(originalSlides[0].cloneNode(true));
+      const lastClone = prepareClone(originalSlides[originalSlides.length - 1].cloneNode(true));
+      track.insertBefore(lastClone, originalSlides[0]);
+      track.appendChild(firstClone);
+    }
+
+    const slideCount = originalSlides.length;
+
+    function getSlides() {
+      return $$(".auto-gallery-slide", track);
+    }
+
+    function renderedToLogical(index) {
+      if (slideCount <= 1) return 0;
+      if (index === 0) return slideCount - 1;
+      if (index === slideCount + 1) return 0;
+      return index - 1;
+    }
 
     let current = 0;
+    let currentRendered = slideCount > 1 ? 1 : 0;
     let autoplay = null;
     let resumeTimer = null;
     let scrollingByCode = false;
@@ -243,17 +295,40 @@ function initAutoGalleries() {
       });
     }
 
-    function goToSlide(index, behavior = "smooth") {
-      current = (index + slides.length) % slides.length;
+    function jumpToRenderedSlide(index) {
+      const slides = getSlides();
+      currentRendered = index;
+      current = renderedToLogical(index);
+      track.scrollTo({
+        left: slides[currentRendered].offsetLeft,
+        behavior: "auto"
+      });
+      updateDots();
+    }
+
+    function normalizeLoopPosition() {
+      if (slideCount <= 1) return;
+      const slides = getSlides();
+      if (currentRendered === 0) {
+        jumpToRenderedSlide(slideCount);
+      } else if (currentRendered === slides.length - 1) {
+        jumpToRenderedSlide(1);
+      }
+    }
+
+    function goToRenderedSlide(index, behavior = "smooth") {
+      const slides = getSlides();
+      currentRendered = index;
+      current = renderedToLogical(index);
       scrollingByCode = true;
-      slides[current].scrollIntoView({
-        behavior: reducedMotion.matches ? "auto" : behavior,
-        inline: "start",
-        block: "nearest"
+      track.scrollTo({
+        left: slides[currentRendered].offsetLeft,
+        behavior: reducedMotion.matches ? "auto" : behavior
       });
       updateDots();
       window.setTimeout(() => {
         scrollingByCode = false;
+        normalizeLoopPosition();
       }, reducedMotion.matches ? 0 : 550);
     }
 
@@ -265,7 +340,7 @@ function initAutoGalleries() {
       if (!autoplayEnabled || reducedMotion.matches || document.hidden) return;
       window.clearInterval(autoplay);
       autoplay = window.setInterval(() => {
-        goToSlide(current + 1);
+        goToRenderedSlide(currentRendered - 1);
       }, delay);
     }
 
@@ -275,13 +350,13 @@ function initAutoGalleries() {
       resumeTimer = window.setTimeout(startAutoplay, 7000);
     }
 
-    slides.forEach((_, index) => {
+    originalSlides.forEach((_, index) => {
       const dot = document.createElement("button");
       dot.type = "button";
       dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
       dot.addEventListener("click", () => {
         pauseAutoplay();
-        goToSlide(index);
+        goToRenderedSlide(index + 1);
         scheduleResume();
       });
       dotsWrap.appendChild(dot);
@@ -289,13 +364,13 @@ function initAutoGalleries() {
 
     prevBtn?.addEventListener("click", () => {
       pauseAutoplay();
-      goToSlide(current - 1);
+      goToRenderedSlide(currentRendered - 1);
       scheduleResume();
     });
 
     nextBtn?.addEventListener("click", () => {
       pauseAutoplay();
-      goToSlide(current + 1);
+      goToRenderedSlide(currentRendered + 1);
       scheduleResume();
     });
 
@@ -308,6 +383,7 @@ function initAutoGalleries() {
 
     let scrollTimer = null;
     track.addEventListener("scroll", () => {
+      const slides = getSlides();
       if (!slides.length) return;
       if (!scrollingByCode) {
         pauseAutoplay();
@@ -318,9 +394,11 @@ function initAutoGalleries() {
         const nearest = slides.reduce((best, slide, index) => {
           const distance = Math.abs(track.scrollLeft - slide.offsetLeft);
           return distance < best.distance ? { index, distance } : best;
-        }, { index: current, distance: Number.POSITIVE_INFINITY });
-        current = nearest.index;
+        }, { index: currentRendered, distance: Number.POSITIVE_INFINITY });
+        currentRendered = nearest.index;
+        current = renderedToLogical(nearest.index);
         updateDots();
+        normalizeLoopPosition();
       }, 120);
     }, { passive: true });
 
@@ -337,13 +415,14 @@ function initAutoGalleries() {
       if (!reducedMotion.matches) startAutoplay();
     });
 
-    goToSlide(0, "auto");
-    updateDots();
+    jumpToRenderedSlide(currentRendered);
     startAutoplay();
+    gallery.dataset.galleryReady = "true";
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  hydrateIcons();
   $("#year").textContent = new Date().getFullYear();
 
   $("#languageToggle")?.addEventListener("click", () => setLanguage(lang === "en" ? "ta" : "en"));
@@ -360,12 +439,12 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#menuBtn")?.setAttribute("aria-expanded", "false");
   }));
 
-  $$("[data-open-booking]").forEach(el => {
-    el.addEventListener("click", () => {
-      const p = el.dataset.problemValue;
-      if (p) updateQuickResult(p, false);
-      openSheet();
-    });
+  document.addEventListener("click", e => {
+    const trigger = e.target.closest("[data-open-booking]");
+    if (!trigger) return;
+    const p = trigger.dataset.problemValue;
+    if (p) updateQuickResult(p, false);
+    openSheet();
   });
 
   $$("[data-close-booking]").forEach(el => el.addEventListener("click", closeSheet));

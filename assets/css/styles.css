@@ -118,6 +118,11 @@ button,input,select,textarea{font:inherit}
   font-weight:900;
   box-shadow:var(--shadow-soft);
   cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
 }
 .nav-install{
   border:1px solid rgba(14,116,104,.18);
@@ -129,6 +134,11 @@ button,input,select,textarea{font:inherit}
   font-weight:900;
   box-shadow:var(--shadow-soft);
   cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
 }
 .install-trigger[hidden]{display:none!important}
 .menubtn{
@@ -235,7 +245,7 @@ button,input,select,textarea{font:inherit}
   background:linear-gradient(135deg,var(--green),var(--sea));
   box-shadow:0 0 0 6px rgba(14,116,104,.09);
 }
-.eyebrow,.section-title span,.doctor-copy span,.branch-card span,.sheet-head span,.quick-result span{
+.eyebrow,.section-title>span,.doctor-copy>span,.branch-card>div>span,.sheet-head>span,.quick-result>div>span{
   display:inline-flex;
   color:var(--green);
   font-weight:900;
@@ -292,10 +302,23 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   font-weight:900;
   cursor:pointer;
 }
+.btn .icon-label,
+.navbook .icon-label,
+.nav-install .icon-label{
+  width:100%;
+}
 .btn.primary{
   background:linear-gradient(135deg,var(--green),var(--sea));
   color:#fff;
   box-shadow:var(--shadow);
+}
+.btn.primary,
+.btn.primary span,
+.btn.primary .icon,
+.navbook,
+.navbook span,
+.navbook .icon{
+  color:#fff;
 }
 .btn.whatsapp,.btn.outline{
   background:#fff;
@@ -303,13 +326,35 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   border-color:rgba(14,116,104,.18);
   box-shadow:var(--shadow-soft);
 }
+.btn.whatsapp,
+.btn.whatsapp span,
+.btn.whatsapp .icon,
+.btn.outline,
+.btn.outline span,
+.btn.outline .icon,
+.nav-install,
+.nav-install span,
+.nav-install .icon{
+  color:var(--green-strong);
+}
 .btn.full{width:100%}
 .icon{
   width:1em;
   height:1em;
   flex:0 0 auto;
   display:inline-block;
-  background:currentColor;
+  background:none;
+  color:inherit;
+}
+.icon svg{
+  width:100%;
+  height:100%;
+  display:block;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 .icon-label{
   display:inline-flex;
@@ -325,41 +370,10 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .title-kicker em{
   font-style:normal;
 }
-.icon-call{
-  -webkit-mask:url("../icons/ui/call.svg") center/contain no-repeat;
-  mask:url("../icons/ui/call.svg") center/contain no-repeat;
-}
-.icon-whatsapp-chat{
-  -webkit-mask:url("../icons/ui/whatsapp-chat.svg") center/contain no-repeat;
-  mask:url("../icons/ui/whatsapp-chat.svg") center/contain no-repeat;
-}
-.icon-directions{
-  -webkit-mask:url("../icons/ui/directions.svg") center/contain no-repeat;
-  mask:url("../icons/ui/directions.svg") center/contain no-repeat;
-}
-.icon-book-calendar{
-  -webkit-mask:url("../icons/ui/book-calendar.svg") center/contain no-repeat;
-  mask:url("../icons/ui/book-calendar.svg") center/contain no-repeat;
-}
-.icon-install-app{
-  -webkit-mask:url("../icons/ui/install-app.svg") center/contain no-repeat;
-  mask:url("../icons/ui/install-app.svg") center/contain no-repeat;
-}
-.icon-treatment{
-  -webkit-mask:url("../icons/ui/treatment.svg") center/contain no-repeat;
-  mask:url("../icons/ui/treatment.svg") center/contain no-repeat;
-}
-.icon-doctor{
-  -webkit-mask:url("../icons/ui/doctor.svg") center/contain no-repeat;
-  mask:url("../icons/ui/doctor.svg") center/contain no-repeat;
-}
-.icon-branch{
-  -webkit-mask:url("../icons/ui/branch.svg") center/contain no-repeat;
-  mask:url("../icons/ui/branch.svg") center/contain no-repeat;
-}
-.icon-gallery{
-  -webkit-mask:url("../icons/ui/gallery.svg") center/contain no-repeat;
-  mask:url("../icons/ui/gallery.svg") center/contain no-repeat;
+.icon[class*="icon-"]{
+  -webkit-mask:none!important;
+  mask:none!important;
+  background:none!important;
 }
 .hero-book-card{
   margin-top:16px;
@@ -661,10 +675,15 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   padding-bottom:6px;
   scroll-padding-inline:2px;
   scroll-snap-type:x mandatory;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(14,116,104,.45) transparent;
   overscroll-behavior-x:contain;
   scroll-behavior:smooth;
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+}
+.auto-gallery-track::-webkit-scrollbar,
+.moments-track::-webkit-scrollbar,
+.clinic-track::-webkit-scrollbar{
+  display:none;
 }
 .auto-gallery-prev,
 .auto-gallery-next{
@@ -988,6 +1007,9 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   grid-template-columns:1fr 1fr;
   gap:10px;
   margin-top:14px;
+}
+.branch-actions .btn{
+  text-align:center;
 }
 
 .branches{background:#fff}
