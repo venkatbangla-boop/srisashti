@@ -12,6 +12,7 @@ const guides = {
     "Elderly mobility": ["Elderly mobility care", "We focus on walking confidence, balance, strength and fall-risk reduction."],
     "Posture correction": ["Ergonomic posture correction", "We guide desk habits, neck/back care, stretching and strengthening exercises."],
     "Post-surgery recovery": ["Post-surgery recovery", "Physiotherapy helps with stiffness, weakness, mobility and gradual functional recovery."],
+    "Bell's palsy": ["Bell's palsy care", "Assessment-based facial stimulation and physiotherapy support may be used to help facial muscle activation, comfort and guided recovery."],
     "Other": ["Physiotherapy consultation", "Send your problem details on WhatsApp. The clinic will guide the suitable branch and appointment timing."]
   },
   ta: {
@@ -23,6 +24,7 @@ const guides = {
     "Elderly mobility": ["முதியோர் இயக்க பராமரிப்பு", "முதியோர் நோயாளிகளுக்கு walking confidence, balance, strength மற்றும் fall-risk reduction."],
     "Posture correction": ["உடல் நிலை திருத்தம்", "Desk habits, neck/back care, stretching மற்றும் strengthening exercise வழிகாட்டுதல்."],
     "Post-surgery recovery": ["அறுவை சிகிச்சைக்குப் பின் மீட்பு", "Surgery-க்குப் பின் stiffness, weakness மற்றும் mobility recovery-க்கு physiotherapy support."],
+    "Bell's palsy": ["பெல்ஸ் பால்ஸி பராமரிப்பு", "Assessment அடிப்படையில் facial stimulation மற்றும் physiotherapy support மூலம் முக தசை செயல்பாடு, நிம்மதி மற்றும் guided recovery-க்கு உதவி வழங்கப்படலாம்."],
     "Other": ["பிசியோதெரபி ஆலோசனை", "உங்கள் பிரச்சனையை WhatsApp-ல் அனுப்புங்கள். சரியான கிளை மற்றும் appointment timing guidance கிடைக்கும்."]
   }
 };

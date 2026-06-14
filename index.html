@@ -178,6 +178,7 @@
 <button type="button" class="pain-chip" data-problem="Elderly mobility" data-en="Elderly mobility" data-ta="முதியோர் இயக்கம்">Elderly mobility</button>
 <button type="button" class="pain-chip" data-problem="Posture correction" data-en="Posture correction" data-ta="உடல் நிலை திருத்தம்">Posture correction</button>
 <button type="button" class="pain-chip" data-problem="Post-surgery recovery" data-en="Post-surgery recovery" data-ta="அறுவை சிகிச்சைக்குப் பின்">Post-surgery recovery</button>
+<button type="button" class="pain-chip" data-problem="Bell's palsy" data-en="Bell's palsy" data-ta="பெல்ஸ் பால்ஸி">Bell's palsy</button>
         </div>
 
         <div class="quick-result" id="quickResult" aria-live="polite">
@@ -307,13 +308,13 @@
           </article>
           <article class="program-card reveal">
             <div class="program-media">
-              <img src="assets/images/clinic-card.webp" alt="Electrotherapy Support at Sri Sashti Physiotherapy Clinic" loading="lazy" width="720" height="900">
+              <img src="assets/images/electrotherapy-card.webp" alt="Electrotherapy modalities at Sri Sashti Physiotherapy Clinic" loading="lazy" width="720" height="900">
               <span data-en="Modalities" data-ta="முறைகள்">Modalities</span>
             </div>
             <div class="program-copy">
-              <h3 data-en="Electrotherapy Support" data-ta="எலக்ட்ரோதெரபி ஆதரவு">Electrotherapy Support</h3>
-              <p data-en="Modern physiotherapy modalities when suitable after assessment." data-ta="Assessment பின் தேவைக்கு ஏற்ப physiotherapy modalities.">Modern physiotherapy modalities when suitable after assessment.</p>
-              <button type="button" class="text-action" data-open-booking data-problem-value="Other" data-en="Book this care" data-ta="இந்த சிகிச்சையை பதிவு செய்ய">Book this care</button>
+              <h3 data-en="Electrotherapy Modalities" data-ta="எலக்ட்ரோதெரபி முறைகள்">Electrotherapy Modalities</h3>
+              <p data-en="Electrotherapy modalities such as IFC, TENS, ultrasound and facial stimulation support may be used after assessment, including selected Bell's palsy care." data-ta="Assessment பின் தேவைக்கு ஏற்ப IFC, TENS, ultrasound மற்றும் facial stimulation போன்ற எலக்ட்ரோதெரபி முறைகள் பயன்படுத்தப்படலாம்; தேர்ந்தெடுக்கப்பட்ட Bell's palsy care-க்கும் ஆதரவு வழங்கப்படும்.">Electrotherapy modalities such as IFC, TENS, ultrasound and facial stimulation support may be used after assessment, including selected Bell's palsy care.</p>
+              <button type="button" class="text-action" data-open-booking data-problem-value="Bell's palsy" data-en="Book this care" data-ta="இந்த சிகிச்சையை பதிவு செய்ய">Book this care</button>
             </div>
           </article>
           <article class="program-card reveal">
@@ -507,8 +508,8 @@
         <p data-en="Bring reports, prescriptions or previous scans if available. Wear comfortable clothing." data-ta="Reports, prescriptions அல்லது scans இருந்தால் கொண்டு வாருங்கள். வசதியான உடை அணியுங்கள்.">Bring reports, prescriptions or previous scans if available. Wear comfortable clothing.</p>
       </details>
       <details>
-        <summary data-en="Do you provide sports injury and fracture rehabilitation?" data-ta="Sports injury மற்றும் fracture rehabilitation உள்ளதா?">Do you provide sports injury and fracture rehabilitation?</summary>
-        <p data-en="Yes. The clinic supports sports injury rehabilitation, fracture stiffness recovery, post-surgery weakness and mobility improvement." data-ta="ஆம். Sports injury rehabilitation, fracture stiffness recovery, post-surgery weakness மற்றும் mobility improvement support உள்ளது.">Yes. The clinic supports sports injury rehabilitation, fracture stiffness recovery, post-surgery weakness and mobility improvement.</p>
+        <summary data-en="Do you provide sports injury, fracture rehabilitation and electrotherapy modalities?" data-ta="Sports injury, fracture rehabilitation மற்றும் எலக்ட்ரோதெரபி முறைகள் உள்ளதா?">Do you provide sports injury, fracture rehabilitation and electrotherapy modalities?</summary>
+        <p data-en="Yes. The clinic supports sports injury rehabilitation, fracture stiffness recovery, post-surgery weakness, mobility improvement and selected electrotherapy modalities based on assessment." data-ta="ஆம். Sports injury rehabilitation, fracture stiffness recovery, post-surgery weakness, mobility improvement மற்றும் assessment அடிப்படையில் தேர்ந்தெடுக்கப்படும் எலக்ட்ரோதெரபி முறைகளுக்கும் ஆதரவு உள்ளது.">Yes. The clinic supports sports injury rehabilitation, fracture stiffness recovery, post-surgery weakness, mobility improvement and selected electrotherapy modalities based on assessment.</p>
       </details>
     </section>
   </main>
@@ -542,7 +543,7 @@
       <label><span data-en="Mobile number" data-ta="மொபைல் எண்">Mobile number</span><input id="phone" data-placeholder-en="Your mobile number" data-placeholder-ta="உங்கள் மொபைல் எண்" placeholder="Your mobile number" inputmode="tel" required></label>
       <div class="two">
         <label>Branch<select id="branch"><option value="Palladam">Palladam</option><option value="Senjeri Pirivu">Senjeri Pirivu</option></select></label>
-        <label><span data-en="Problem" data-ta="பிரச்சனை">Problem</span><select id="problem"><option>Back pain</option><option>Neck pain</option><option>Knee pain</option><option>Sports injury</option><option>Fracture rehab</option><option>Elderly mobility</option><option>Posture correction</option><option>Post-surgery recovery</option><option>Other</option></select></label>
+        <label><span data-en="Problem" data-ta="பிரச்சனை">Problem</span><select id="problem"><option>Back pain</option><option>Neck pain</option><option>Knee pain</option><option>Sports injury</option><option>Fracture rehab</option><option>Elderly mobility</option><option>Posture correction</option><option>Post-surgery recovery</option><option>Bell's palsy</option><option>Other</option></select></label>
       </div>
       <label>Message<textarea id="message" data-placeholder-en="Example: I have knee pain for 2 weeks and need appointment today." data-placeholder-ta="உதாரணம்: 2 வாரமாக முழங்கால் வலி உள்ளது. இன்று appointment வேண்டும்." placeholder="Example: I have knee pain for 2 weeks and need appointment today."></textarea></label>
       <button class="btn primary full" type="submit" data-en="Send on WhatsApp" data-ta="WhatsApp-ல் அனுப்பு">Send on WhatsApp</button>
