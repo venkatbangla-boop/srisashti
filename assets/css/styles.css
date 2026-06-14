@@ -263,7 +263,7 @@ h2{
   margin:0;
 }
 h3{margin:.2rem 0;letter-spacing:-.02em}
-.hero-copy p,.section-title p,.program-card p,.doctor-card p,.branch-card p,.faq p,.footer p,.quick-result p,.family-grid p{
+.hero-copy p,.section-title p,.program-card p,.doctor-card p,.branch-card p,.faq p,.footer p,.quick-result p,.family-grid p,.moment-card p,.care-gallery-card p,.clinic-card-slide p,.visit-step p,.visit-card p{
   color:var(--ink-soft);
 }
 .hero-copy p{
@@ -304,6 +304,63 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   box-shadow:var(--shadow-soft);
 }
 .btn.full{width:100%}
+.icon{
+  width:1em;
+  height:1em;
+  flex:0 0 auto;
+  display:inline-block;
+  background:currentColor;
+}
+.icon-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.title-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.title-kicker em{
+  font-style:normal;
+}
+.icon-call{
+  -webkit-mask:url("../icons/ui/call.svg") center/contain no-repeat;
+  mask:url("../icons/ui/call.svg") center/contain no-repeat;
+}
+.icon-whatsapp-chat{
+  -webkit-mask:url("../icons/ui/whatsapp-chat.svg") center/contain no-repeat;
+  mask:url("../icons/ui/whatsapp-chat.svg") center/contain no-repeat;
+}
+.icon-directions{
+  -webkit-mask:url("../icons/ui/directions.svg") center/contain no-repeat;
+  mask:url("../icons/ui/directions.svg") center/contain no-repeat;
+}
+.icon-book-calendar{
+  -webkit-mask:url("../icons/ui/book-calendar.svg") center/contain no-repeat;
+  mask:url("../icons/ui/book-calendar.svg") center/contain no-repeat;
+}
+.icon-install-app{
+  -webkit-mask:url("../icons/ui/install-app.svg") center/contain no-repeat;
+  mask:url("../icons/ui/install-app.svg") center/contain no-repeat;
+}
+.icon-treatment{
+  -webkit-mask:url("../icons/ui/treatment.svg") center/contain no-repeat;
+  mask:url("../icons/ui/treatment.svg") center/contain no-repeat;
+}
+.icon-doctor{
+  -webkit-mask:url("../icons/ui/doctor.svg") center/contain no-repeat;
+  mask:url("../icons/ui/doctor.svg") center/contain no-repeat;
+}
+.icon-branch{
+  -webkit-mask:url("../icons/ui/branch.svg") center/contain no-repeat;
+  mask:url("../icons/ui/branch.svg") center/contain no-repeat;
+}
+.icon-gallery{
+  -webkit-mask:url("../icons/ui/gallery.svg") center/contain no-repeat;
+  mask:url("../icons/ui/gallery.svg") center/contain no-repeat;
+}
 .hero-book-card{
   margin-top:16px;
   width:100%;
@@ -447,6 +504,7 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 }
 .quick-actions a:last-child,.quick-actions button:last-child{border-right:0}
 .quick-actions b{display:block;color:var(--ink);font-size:.9rem}
+.quick-actions b.icon-label{justify-content:center}
 .quick-actions small{display:block;color:var(--ink-soft);font-size:.72rem;margin-top:3px}
 .branch-helper{
   text-align:center;
@@ -584,6 +642,93 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   font-weight:900;
   padding:10px 0 0;
   cursor:pointer;
+}
+.treatment-moments,
+.clinic-tour{
+  background:linear-gradient(180deg,#ffffff,#f6fcf9);
+}
+.moments-track,
+.clinic-track{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(284px,84%);
+  gap:14px;
+  overflow-x:auto;
+  padding-bottom:6px;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(14,116,104,.45) transparent;
+}
+.moment-card,
+.care-gallery-card,
+.clinic-card-slide,
+.visit-step,
+.visit-card{
+  background:linear-gradient(180deg,#ffffff,#fbfffd);
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:var(--shadow-soft);
+}
+.moment-card,
+.clinic-card-slide{
+  scroll-snap-align:start;
+}
+.moment-card img,
+.care-gallery-card img,
+.clinic-card-slide img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+.moment-copy{
+  padding:16px;
+}
+.moment-copy small{
+  display:inline-flex;
+  color:var(--green);
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:none;
+}
+.moment-copy p{
+  margin:8px 0 0;
+}
+.care-gallery-grid,
+.process-grid,
+.visit-cards{
+  display:grid;
+  gap:14px;
+}
+.visit-step,
+.visit-card{
+  padding:18px;
+}
+.visit-step strong{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--green-soft),#ffffff);
+  color:var(--green-strong);
+  font-size:1rem;
+  box-shadow:var(--shadow-soft);
+}
+.visit-step h3,
+.visit-card h3{
+  margin:14px 0 0;
+}
+.visit-step p,
+.visit-card p{
+  margin:8px 0 0;
+}
+.visit-cta{
+  margin-top:18px;
+  text-align:center;
+}
+.visit-cta .btn{
+  min-width:min(100%,280px);
 }
 
 .journey{
@@ -843,8 +988,10 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   border-radius:16px;
   background:var(--green);
   color:#fff;
-  display:grid;
-  place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
   font-weight:900;
 }
 .bottom-nav a:nth-child(2){background:#16916a}
@@ -979,6 +1126,11 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   .section{padding:88px clamp(28px,6vw,88px)}
   .program-grid{grid-template-columns:repeat(3,1fr)}
   .program-media img{height:290px}
+  .moments-track,
+  .clinic-track{grid-auto-columns:minmax(300px,360px)}
+  .care-gallery-grid{grid-template-columns:repeat(3,1fr)}
+  .process-grid{grid-template-columns:repeat(5,1fr)}
+  .visit-cards{grid-template-columns:repeat(3,1fr)}
   .journey-grid{grid-template-columns:repeat(3,1fr)}
   .journey-card img{height:240px}
   .doctor-card{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center}

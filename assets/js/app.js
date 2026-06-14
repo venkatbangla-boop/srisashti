@@ -5,38 +5,60 @@ const $$ = (s, p=document) => [...p.querySelectorAll(s)];
 const guides = {
   en: {
     "Back pain": ["Back pain care", "We check stiffness, posture strain and daily movement difficulty, then guide therapy and exercises."],
+    "Back Pain Care": ["Back Pain Care", "We check stiffness, posture strain and daily movement difficulty, then guide therapy and exercises."],
     "Neck pain": ["Neck pain care", "We assess neck tightness, posture strain and movement restriction, then plan suitable therapy and home care."],
+    "Neck Pain Care": ["Neck Pain Care", "We assess neck tightness, posture strain and movement restriction, then plan suitable therapy and home care."],
     "Knee pain": ["Knee pain care", "We focus on walking comfort, joint strength, flexibility and pain-reduction support."],
     "Sports injury": ["Sports injury rehab", "We support safe recovery, strengthening, balance and return-to-activity planning."],
+    "Sports Injury Rehab": ["Sports Injury Rehab", "We support safe recovery, strengthening, balance and return-to-activity planning."],
     "Fracture rehab": ["Fracture rehabilitation", "After fracture healing, physiotherapy helps reduce stiffness, improve strength and restore movement safely."],
+    "Fracture Rehabilitation": ["Fracture Rehabilitation", "After fracture healing, physiotherapy helps reduce stiffness, improve strength and restore movement safely."],
     "Arthritis care": ["Arthritis care", "Supportive physiotherapy helps with joint stiffness, knee pain, arthritis-related weakness and walking difficulty."],
     "Knee pain and arthritis care": ["Knee pain and arthritis care", "Supportive physiotherapy helps with knee pain, arthritis-related stiffness, walking difficulty and joint strength recovery."],
+    "Knee Pain & Arthritis Care": ["Knee Pain & Arthritis Care", "Supportive physiotherapy helps with knee pain, arthritis-related stiffness, walking difficulty and joint strength recovery."],
     "Musculoskeletal pain": ["Musculoskeletal pain care", "We support muscle, joint, ligament and posture-related pain that affects work, sleep and daily movement."],
+    "Musculoskeletal Pain": ["Musculoskeletal Pain", "We support muscle, joint, ligament and posture-related pain that affects work, sleep and daily movement."],
+    "Shoulder & Joint Care": ["Shoulder & Joint Care", "We support frozen shoulder, joint stiffness, shoulder pain and movement restriction after assessment."],
     "Electrotherapy modalities": ["Electrotherapy modalities", "TENS, IFT, ultrasound and muscle stimulation may be used after assessment to support pain relief and recovery."],
+    "Electrotherapy Modalities": ["Electrotherapy Modalities", "TENS, IFT, ultrasound and muscle stimulation may be used after assessment to support pain relief and recovery."],
     "Core stability exercise": ["Core stability exercise", "Targeted core strengthening helps support the spine, posture, balance and long-term back pain prevention."],
+    "Core Stability Exercise": ["Core Stability Exercise", "Targeted core strengthening helps support the spine, posture, balance and long-term back pain prevention."],
     "Post-surgery recovery": ["Post-surgery recovery", "Physiotherapy helps with stiffness, weakness, mobility and gradual functional recovery."],
+    "Pre and Post Operative Rehabilitation": ["Pre and Post Operative Rehabilitation", "Physiotherapy helps with stiffness, weakness, mobility and gradual functional recovery before and after surgery."],
     "Bell's palsy": ["Bell's palsy care", "Assessment-based facial stimulation and physiotherapy support may be used to help facial muscle activation, comfort and guided recovery."],
+    "Facial Palsy & Neuro Care": ["Facial Palsy & Neuro Care", "Assessment-based physiotherapy support may be used for facial palsy, nerve-related weakness and guided movement recovery."],
     "Other": ["Physiotherapy consultation", "Send your problem details on WhatsApp. The clinic will guide the suitable branch and appointment timing."]
   },
   ta: {
     "Back pain": ["முதுகு வலி பராமரிப்பு", "முதுகு வலி, posture strain, stiffness மற்றும் தினசரி இயக்க சிரமங்களுக்கு therapy மற்றும் exercise guidance வழங்கப்படும்."],
+    "Back Pain Care": ["முதுகு வலி பராமரிப்பு", "முதுகு வலி, posture strain, stiffness மற்றும் தினசரி இயக்க சிரமங்களுக்கு therapy மற்றும் exercise guidance வழங்கப்படும்."],
     "Neck pain": ["கழுத்து வலி பராமரிப்பு", "கழுத்து இறுக்கம், posture strain மற்றும் movement restriction-க்கு therapy மற்றும் home care வழிகாட்டுதல்."],
+    "Neck Pain Care": ["கழுத்து வலி பராமரிப்பு", "கழுத்து இறுக்கம், posture strain மற்றும் movement restriction-க்கு therapy மற்றும் home care வழிகாட்டுதல்."],
     "Knee pain": ["முழங்கால் வலி பராமரிப்பு", "முழங்கால் வலி, walking comfort, joint strength மற்றும் flexibility மேம்பாட்டில் கவனம்."],
     "Sports injury": ["விளையாட்டு காயம் மறுவாழ்வு", "Sports injury-க்கு safe recovery, strengthening, balance மற்றும் return-to-activity plan."],
+    "Sports Injury Rehab": ["விளையாட்டு காயம் மறுவாழ்வு", "Sports injury-க்கு safe recovery, strengthening, balance மற்றும் return-to-activity plan."],
     "Fracture rehab": ["எலும்பு முறிவு மறுவாழ்வு", "Fracture healing-க்குப் பின் stiffness குறைத்து strength மற்றும் movement restore செய்ய உதவும்."],
+    "Fracture Rehabilitation": ["எலும்பு முறிவு மறுவாழ்வு", "Fracture healing-க்குப் பின் stiffness குறைத்து strength மற்றும் movement restore செய்ய உதவும்."],
     "Arthritis care": ["ஆர்திரைடிஸ் பராமரிப்பு", "மூட்டு இறுக்கம், முழங்கால் வலி, arthritis காரணமான பலவீனம் மற்றும் நடக்கும் சிரமங்களுக்கு supportive physiotherapy வழங்கப்படும்."],
     "Knee pain and arthritis care": ["முழங்கால் வலி மற்றும் ஆர்திரைடிஸ் பராமரிப்பு", "முழங்கால் வலி, arthritis காரணமான இறுக்கம், நடக்கும் சிரமம் மற்றும் joint strength recovery-க்கு supportive physiotherapy வழங்கப்படும்."],
+    "Knee Pain & Arthritis Care": ["முழங்கால் வலி & ஆர்திரைடிஸ் பராமரிப்பு", "முழங்கால் வலி, arthritis காரணமான இறுக்கம், நடக்கும் சிரமம் மற்றும் joint strength recovery-க்கு supportive physiotherapy வழங்கப்படும்."],
     "Musculoskeletal pain": ["தசைமூட்டு வலி பராமரிப்பு", "தசை, மூட்டு, ligament மற்றும் posture-ஆல் வரும் வலி வேலை, தூக்கம் மற்றும் தினசரி இயக்கத்தை பாதிக்கும்போது உதவி வழங்கப்படும்."],
+    "Musculoskeletal Pain": ["தசைமூட்டு வலி பராமரிப்பு", "தசை, மூட்டு, ligament மற்றும் posture-ஆல் வரும் வலி வேலை, தூக்கம் மற்றும் தினசரி இயக்கத்தை பாதிக்கும்போது உதவி வழங்கப்படும்."],
+    "Shoulder & Joint Care": ["தோள் & மூட்டு பராமரிப்பு", "Frozen shoulder, joint stiffness, shoulder pain மற்றும் movement restriction-க்கு support வழங்கப்படும்."],
     "Electrotherapy modalities": ["எலக்ட்ரோதெரபி முறைகள்", "Assessment பின் TENS, IFT, ultrasound மற்றும் muscle stimulation போன்ற முறைகள் வலி நிவாரணம் மற்றும் recovery-க்கு பயன்படுத்தப்படலாம்."],
+    "Electrotherapy Modalities": ["எலக்ட்ரோதெரபி முறைகள்", "Assessment பின் TENS, IFT, ultrasound மற்றும் muscle stimulation போன்ற முறைகள் வலி நிவாரணம் மற்றும் recovery-க்கு பயன்படுத்தப்படலாம்."],
     "Core stability exercise": ["மைய தசை நிலைத்தன்மை பயிற்சி", "முதுகெலும்பு, posture, balance மற்றும் நீண்டகால முதுகு வலி தடுப்புக்கு targeted core strengthening உதவும்."],
+    "Core Stability Exercise": ["மைய தசை நிலைத்தன்மை பயிற்சி", "முதுகெலும்பு, posture, balance மற்றும் நீண்டகால முதுகு வலி தடுப்புக்கு targeted core strengthening உதவும்."],
     "Post-surgery recovery": ["அறுவை சிகிச்சைக்குப் பின் மீட்பு", "Surgery-க்குப் பின் stiffness, weakness மற்றும் mobility recovery-க்கு physiotherapy support."],
+    "Pre and Post Operative Rehabilitation": ["அறுவை சிகிச்சைக்கு முன் மற்றும் பின் மறுவாழ்வு", "Surgery முன் மற்றும் பின் stiffness, weakness மற்றும் mobility recovery-க்கு physiotherapy support."],
     "Bell's palsy": ["பெல்ஸ் பால்ஸி பராமரிப்பு", "Assessment அடிப்படையில் facial stimulation மற்றும் physiotherapy support மூலம் முக தசை செயல்பாடு, நிம்மதி மற்றும் guided recovery-க்கு உதவி வழங்கப்படலாம்."],
+    "Facial Palsy & Neuro Care": ["முக நரம்பு பலவீனம் & நரம்பியல் பராமரிப்பு", "Assessment அடிப்படையில் facial palsy, nerve-related weakness மற்றும் guided movement recovery-க்கு physiotherapy support வழங்கப்படலாம்."],
     "Other": ["பிசியோதெரபி ஆலோசனை", "உங்கள் பிரச்சனையை WhatsApp-ல் அனுப்புங்கள். சரியான கிளை மற்றும் appointment timing guidance கிடைக்கும்."]
   }
 };
 
 let lang = localStorage.getItem("ss_lang") || "en";
-let selectedProblem = "Back pain";
+let selectedProblem = "Back Pain Care";
 let lastFocus = null;
 const animatedCounts = new WeakSet();
 let deferredInstallPrompt = null;
@@ -253,10 +275,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const message = $("#message").value.trim();
     const branchPhone = branch === "Palladam" ? "917845707427" : "917397285636";
     const text =
-      `Hello Sri Sashti Physiotherapy Clinic,%0A%0AI want to book a physiotherapy appointment.%0A%0A` +
+      `Hello Sri Sashti Physiotherapy Clinic,%0A%0AI want appointment for ${encodeURIComponent(problem)}.%0APreferred branch: ${encodeURIComponent(branch)}.%0A%0A` +
       `Name: ${encodeURIComponent(name)}%0A` +
       `Mobile: ${encodeURIComponent(phone)}%0A` +
-      `Preferred branch: ${encodeURIComponent(branch)}%0A` +
       `Problem: ${encodeURIComponent(problem)}%0A` +
       `Message: ${encodeURIComponent(message || "Please call me for appointment timing.")}`;
     trackEvent("whatsapp_booking_submit");
@@ -289,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   setLanguage(lang);
-  updateQuickResult("Back pain", false);
+  updateQuickResult("Back Pain Care", false);
   updateInstallButtons();
 
   if ("serviceWorker" in navigator) {
