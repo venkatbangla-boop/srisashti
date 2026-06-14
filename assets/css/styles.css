@@ -140,6 +140,10 @@ button,input,select,textarea{font:inherit}
   text-align:center;
   white-space:nowrap;
 }
+.navbook,
+.nav-install{
+  display:none;
+}
 .install-trigger[hidden]{display:none!important}
 .menubtn{
   border:1px solid var(--line);
@@ -1160,6 +1164,8 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   .menubtn{display:none}
   .navlinks{display:flex;gap:24px;margin-left:28px}
   .navlinks a{font-weight:900;color:#183f45}
+  .navbook,
+  .nav-install{display:inline-flex}
   .navbook{margin-left:auto}
   .mobilemenu{display:none!important}
   .hero-inner{
