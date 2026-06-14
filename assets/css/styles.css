@@ -144,10 +144,31 @@ button,input,select,textarea{font:inherit}
 }
 
 .hero{
+  position:relative;
   overflow:hidden;
   background:
     radial-gradient(circle at top right, rgba(18,63,99,.08), transparent 28%),
     linear-gradient(180deg,#fffefb 0%,#f3faf7 100%);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(255,254,251,.96) 0%, rgba(255,254,251,.92) 36%, rgba(255,254,251,.68) 58%, rgba(255,254,251,.28) 100%);
+  z-index:1;
+}
+.hero-ambient{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,.18), transparent 24%),
+    linear-gradient(180deg, rgba(9,87,79,.14), rgba(18,63,99,.06)),
+    url("../images/hero-ambient-cinematic.png") center right/cover no-repeat;
+  transform:scale(1.05);
+  transform-origin:center;
+  animation:ambientDrift 18s ease-in-out infinite alternate;
+  filter:saturate(1.04) contrast(1.02);
 }
 .hero-inner{
   display:grid;
@@ -155,6 +176,32 @@ button,input,select,textarea{font:inherit}
   padding:34px 18px 22px;
   max-width:var(--max);
   margin:auto;
+  position:relative;
+  z-index:2;
+}
+.hero-mode{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(14,116,104,.14);
+  background:rgba(255,255,255,.8);
+  color:var(--green-strong);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:.76rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  box-shadow:var(--shadow-soft);
+  backdrop-filter:blur(12px);
+}
+.hero-mode:before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--sea));
+  box-shadow:0 0 0 6px rgba(14,116,104,.09);
 }
 .eyebrow,.section-title span,.doctor-copy span,.branch-card span,.sheet-head span,.quick-result span{
   display:inline-flex;
@@ -191,6 +238,10 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   font-size:1.02rem;
   margin:0 0 18px;
   max-width:600px;
+}
+.hero-copy{
+  position:relative;
+  padding:8px 0 0;
 }
 .hero-actions{
   display:grid;
@@ -831,6 +882,11 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(-8px)}
 }
+@keyframes ambientDrift{
+  0%{transform:scale(1.05) translate3d(0,0,0)}
+  50%{transform:scale(1.08) translate3d(-1.4%,0,0)}
+  100%{transform:scale(1.06) translate3d(1.2%,-1%,0)}
+}
 @keyframes doctorPulse{
   0%,100%{transform:scale(.96);opacity:.55}
   50%{transform:scale(1.04);opacity:.88}
@@ -849,6 +905,10 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
     gap:44px;
     padding:74px 28px 52px;
   }
+  .hero:after{
+    background:
+      linear-gradient(90deg, rgba(255,254,251,.94) 0%, rgba(255,254,251,.88) 34%, rgba(255,254,251,.54) 57%, rgba(255,254,251,.12) 100%);
+  }
   h1{
     font-size:clamp(3.5rem,5.4vw,4.95rem);
     line-height:.98;
@@ -866,6 +926,9 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   html[lang="ta"] .hero-copy p{
     font-size:1rem;
     max-width:620px;
+  }
+  .hero-copy{
+    padding:16px 0;
   }
   .hero-media{border-radius:42px;min-height:560px}
   .hero-media img{height:560px}
@@ -902,6 +965,13 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   .brand img{width:50px;height:50px}
   .brand b{font-size:1.05rem}
   h1{font-size:clamp(2.2rem,10vw,3.4rem)}
+  .hero:after{
+    background:
+      linear-gradient(180deg, rgba(255,254,251,.92) 0%, rgba(255,254,251,.84) 48%, rgba(255,254,251,.64) 100%);
+  }
+  .hero-ambient{
+    background-position:70% center;
+  }
   .hero-stats,.doctor-metrics{grid-template-columns:1fr}
   .hero-actions,.review-actions,.branch-actions,.two{grid-template-columns:1fr}
 }
