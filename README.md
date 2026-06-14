@@ -1,36 +1,42 @@
-# Sri Sashti Physiotherapy Clinic - Final Website V2.4
+# Sri Sashti Physiotherapy Clinic - FINAL LIVE V2.5
 
-This is the cleaned final version.
+Domain configured: `https://srisashtiphysio.co.in`
 
-## What is fixed
+## Completed final pass
 
-- Single clean JavaScript file; old duplicate Quick Help handlers removed.
-- Quick Help works visibly:
-  - click a pain problem
-  - selected chip highlights
-  - result box updates
-  - booking sheet opens with problem selected
-- Stronger Google-search hero:
-  "Pain relief in Palladam & Senjeri — book in 30 seconds."
-- Doctor image is not repeated inside treatment programs.
-- Before/After is now a clear 3-step recovery journey.
-- English/Tamil toggle works for main website text.
-- Actual clinic logo is retained.
-- PWA manifest, service worker, icons, robots, sitemap template and GitHub Pages workflow included.
-- Final folder name: `sri-sashti-final-website`
+- Final canonical URL added.
+- Robots.txt sitemap line added.
+- Sitemap uses final domain.
+- Stronger local SEO copy for Palladam, Senjeri Pirivu and Pollachi-Palladam Road.
+- Improved LocalBusiness / MedicalClinic schema:
+  - url
+  - logo
+  - image
+  - opening hours
+  - price range
+  - sameAs links
+  - branch addresses and phone numbers
+- Added patient and attender guidance section.
+- Improved doctor trust content.
+- Full Tamil/English coverage improved for core sections, reviews, FAQ, form labels and placeholders.
+- Booking dialog now has focus trap and selected branch/problem summary.
+- Click tracking hooks added for future GA4/Tag Manager.
+- PWA cache bumped to V2.5.
 
-## Before publishing
+## Before going live
 
-1. Replace `https://your-domain.com/` in `sitemap.xml`.
-2. Add final canonical URL in `index.html` after the domain is confirmed.
-3. Test:
-   - Quick Help chip click
-   - booking sheet
-   - Tamil button
-   - call buttons
-   - WhatsApp message
-   - map links
-4. Submit sitemap in Google Search Console after hosting.
+1. Upload the contents of this folder to hosting for `https://srisashtiphysio.co.in`.
+2. Confirm SSL is active.
+3. Submit `https://srisashtiphysio.co.in/sitemap.xml` in Google Search Console.
+4. Connect the domain to Google Business Profile.
+5. Add GA4 or Google Tag Manager ID if needed.
+6. Test on mobile:
+   - Call button
+   - WhatsApp button
+   - Quick Help chips
+   - Booking form
+   - Tamil toggle
+   - Map links
 
 ## Branch contacts
 

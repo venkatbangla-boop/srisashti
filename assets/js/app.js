@@ -11,7 +11,8 @@ const guides = {
     "Fracture rehab": ["Fracture rehabilitation", "After fracture healing, physiotherapy helps reduce stiffness, improve strength and restore movement safely."],
     "Elderly mobility": ["Elderly mobility care", "We focus on walking confidence, balance, strength and fall-risk reduction."],
     "Posture correction": ["Ergonomic posture correction", "We guide desk habits, neck/back care, stretching and strengthening exercises."],
-    "Post-surgery recovery": ["Post-surgery recovery", "Physiotherapy helps with stiffness, weakness, mobility and gradual functional recovery."]
+    "Post-surgery recovery": ["Post-surgery recovery", "Physiotherapy helps with stiffness, weakness, mobility and gradual functional recovery."],
+    "Other": ["Physiotherapy consultation", "Send your problem details on WhatsApp. The clinic will guide the suitable branch and appointment timing."]
   },
   ta: {
     "Back pain": ["முதுகு வலி பராமரிப்பு", "முதுகு வலி, posture strain, stiffness மற்றும் தினசரி இயக்க சிரமங்களுக்கு therapy மற்றும் exercise guidance வழங்கப்படும்."],
@@ -21,23 +22,50 @@ const guides = {
     "Fracture rehab": ["எலும்பு முறிவு மறுவாழ்வு", "Fracture healing-க்குப் பின் stiffness குறைத்து strength மற்றும் movement restore செய்ய உதவும்."],
     "Elderly mobility": ["முதியோர் இயக்க பராமரிப்பு", "முதியோர் நோயாளிகளுக்கு walking confidence, balance, strength மற்றும் fall-risk reduction."],
     "Posture correction": ["உடல் நிலை திருத்தம்", "Desk habits, neck/back care, stretching மற்றும் strengthening exercise வழிகாட்டுதல்."],
-    "Post-surgery recovery": ["அறுவை சிகிச்சைக்குப் பின் மீட்பு", "Surgery-க்குப் பின் stiffness, weakness மற்றும் mobility recovery-க்கு physiotherapy support."]
+    "Post-surgery recovery": ["அறுவை சிகிச்சைக்குப் பின் மீட்பு", "Surgery-க்குப் பின் stiffness, weakness மற்றும் mobility recovery-க்கு physiotherapy support."],
+    "Other": ["பிசியோதெரபி ஆலோசனை", "உங்கள் பிரச்சனையை WhatsApp-ல் அனுப்புங்கள். சரியான கிளை மற்றும் appointment timing guidance கிடைக்கும்."]
   }
 };
 
 let lang = localStorage.getItem("ss_lang") || "en";
 let selectedProblem = "Back pain";
+let lastFocus = null;
+
+function trackEvent(name) {
+  if (!name) return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "site_interaction", action: name });
+  if (typeof gtag === "function") gtag("event", name);
+}
 
 function setLanguage(nextLang) {
   lang = nextLang;
   document.documentElement.lang = lang === "ta" ? "ta" : "en";
+
   $$("[data-en][data-ta]").forEach(el => {
     el.textContent = el.dataset[lang] || el.dataset.en;
   });
+
+  $$("[data-placeholder-en][data-placeholder-ta]").forEach(el => {
+    el.placeholder = el.dataset[`placeholder${lang === "ta" ? "Ta" : "En"}`] || el.placeholder;
+  });
+
   const toggle = $("#languageToggle");
   if (toggle) toggle.textContent = lang === "en" ? "தமிழ்" : "English";
+
   localStorage.setItem("ss_lang", lang);
   updateQuickResult(selectedProblem, false);
+  updateSelectedSummary();
+}
+
+function updateSelectedSummary() {
+  const summary = $("#selectedSummary");
+  if (!summary) return;
+  const branch = $("#branch")?.value || "Palladam";
+  const problem = $("#problem")?.value || selectedProblem;
+  summary.textContent = lang === "ta"
+    ? `தேர்வு: ${branch} • ${problem}`
+    : `Selected: ${branch} • ${problem}`;
 }
 
 function updateQuickResult(problem, openBooking) {
@@ -58,8 +86,10 @@ function updateQuickResult(problem, openBooking) {
   result.classList.remove("is-updated");
   void result.offsetWidth;
   result.classList.add("is-updated");
+  updateSelectedSummary();
 
   if (openBooking) {
+    trackEvent(`quick_help_${problem.toLowerCase().replaceAll(" ", "_")}`);
     result.scrollIntoView({ behavior:"smooth", block:"center" });
     setTimeout(openSheet, 450);
   }
@@ -68,9 +98,12 @@ function updateQuickResult(problem, openBooking) {
 function openSheet() {
   const sheet = $("#bookingSheet");
   if (!sheet) return;
+  lastFocus = document.activeElement;
+  updateSelectedSummary();
   sheet.classList.add("open");
   sheet.setAttribute("aria-hidden", "false");
   document.body.classList.add("sheet-open");
+  trackEvent("booking_sheet_open");
   setTimeout(() => $("#phone")?.focus(), 250);
 }
 
@@ -80,6 +113,24 @@ function closeSheet() {
   sheet.classList.remove("open");
   sheet.setAttribute("aria-hidden", "true");
   document.body.classList.remove("sheet-open");
+  if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+}
+
+function trapFocus(e) {
+  const sheet = $("#bookingSheet");
+  if (!sheet?.classList.contains("open") || e.key !== "Tab") return;
+  const focusable = $$('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])', sheet)
+    .filter(el => !el.disabled && el.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -102,23 +153,16 @@ document.addEventListener("DOMContentLoaded", () => {
   $$("[data-open-booking]").forEach(el => {
     el.addEventListener("click", () => {
       const p = el.dataset.problemValue;
-      if (p) {
-        const mapped = {
-          "Back & Neck Pain": "Back pain",
-          "Sports Injury Rehab": "Sports injury",
-          "Fracture Rehabilitation": "Fracture rehab",
-          "Elderly Mobility Care": "Elderly mobility",
-          "Ergonomic Correction": "Posture correction",
-          "Knee Pain Care": "Knee pain"
-        };
-        updateQuickResult(mapped[p] || selectedProblem, false);
-      }
+      if (p) updateQuickResult(p, false);
       openSheet();
     });
   });
 
   $$("[data-close-booking]").forEach(el => el.addEventListener("click", closeSheet));
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeSheet();
+    trapFocus(e);
+  });
 
   $$("[data-branch]").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -126,11 +170,19 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
       const select = $("#branch");
       if (select) select.value = btn.dataset.branch;
+      updateSelectedSummary();
     });
   });
 
+  $("#branch")?.addEventListener("change", updateSelectedSummary);
+  $("#problem")?.addEventListener("change", e => updateQuickResult(e.target.value, false));
+
   $$(".pain-chip").forEach(chip => {
     chip.addEventListener("click", () => updateQuickResult(chip.dataset.problem, true));
+  });
+
+  $$("[data-track]").forEach(el => {
+    el.addEventListener("click", () => trackEvent(el.dataset.track));
   });
 
   $("#bookingForm")?.addEventListener("submit", e => {
@@ -148,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `Preferred branch: ${encodeURIComponent(branch)}%0A` +
       `Problem: ${encodeURIComponent(problem)}%0A` +
       `Message: ${encodeURIComponent(message || "Please call me for appointment timing.")}`;
+    trackEvent("whatsapp_booking_submit");
     window.open(`https://wa.me/${branchPhone}?text=${text}`, "_blank", "noopener");
   });
 

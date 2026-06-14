@@ -1,23 +1,49 @@
 {
   "name": "Sri Sashti Physiotherapy Clinic",
   "short_name": "Sri Sashti Physio",
-  "description": "Mobile-first booking, call, WhatsApp and directions for Sri Sashti Physiotherapy Clinic.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "description": "Book physiotherapy care in Palladam and Senjeri Pirivu.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#f7fffb",
   "theme_color": "#006b5f",
   "icons": [
     {
-      "src": "assets/icons/icon-192.png",
+      "src": "/assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-512.png",
+      "src": "/assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book Appointment",
+      "short_name": "Book",
+      "url": "/#quick",
+      "icons": [
+        {
+          "src": "/assets/icons/icon-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Call Palladam",
+      "short_name": "Call",
+      "url": "tel:+917845707427",
+      "icons": [
+        {
+          "src": "/assets/icons/icon-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

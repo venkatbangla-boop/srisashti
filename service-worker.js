@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v24-final";
+const CACHE_NAME = "sri-sashti-v25-live";
 const ASSETS = [
   "./",
   "./index.html",
