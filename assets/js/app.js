@@ -210,6 +210,139 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
+function initAutoGalleries() {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const galleries = $$(".auto-gallery");
+
+  galleries.forEach(gallery => {
+    const track = $(".auto-gallery-track", gallery);
+    const slides = $$(".auto-gallery-slide", gallery);
+    const prevBtn = $(".auto-gallery-prev", gallery);
+    const nextBtn = $(".auto-gallery-next", gallery);
+    const dotsWrap = $(".auto-gallery-dots", gallery);
+    if (!track || !slides.length || !dotsWrap) return;
+
+    let current = 0;
+    let autoplay = null;
+    let resumeTimer = null;
+    let scrollingByCode = false;
+    const delay = Number.parseInt(gallery.dataset.delay || "4800", 10);
+    const autoplayEnabled = gallery.dataset.autoplay === "true";
+
+    function clearTimers() {
+      window.clearInterval(autoplay);
+      window.clearTimeout(resumeTimer);
+      autoplay = null;
+      resumeTimer = null;
+    }
+
+    function updateDots() {
+      $$("button", dotsWrap).forEach((dot, index) => {
+        const active = index === current;
+        dot.setAttribute("aria-current", active ? "true" : "false");
+      });
+    }
+
+    function goToSlide(index, behavior = "smooth") {
+      current = (index + slides.length) % slides.length;
+      scrollingByCode = true;
+      slides[current].scrollIntoView({
+        behavior: reducedMotion.matches ? "auto" : behavior,
+        inline: "start",
+        block: "nearest"
+      });
+      updateDots();
+      window.setTimeout(() => {
+        scrollingByCode = false;
+      }, reducedMotion.matches ? 0 : 550);
+    }
+
+    function pauseAutoplay() {
+      clearTimers();
+    }
+
+    function startAutoplay() {
+      if (!autoplayEnabled || reducedMotion.matches || document.hidden) return;
+      window.clearInterval(autoplay);
+      autoplay = window.setInterval(() => {
+        goToSlide(current + 1);
+      }, delay);
+    }
+
+    function scheduleResume() {
+      if (!autoplayEnabled || reducedMotion.matches) return;
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(startAutoplay, 7000);
+    }
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+      dot.addEventListener("click", () => {
+        pauseAutoplay();
+        goToSlide(index);
+        scheduleResume();
+      });
+      dotsWrap.appendChild(dot);
+    });
+
+    prevBtn?.addEventListener("click", () => {
+      pauseAutoplay();
+      goToSlide(current - 1);
+      scheduleResume();
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      pauseAutoplay();
+      goToSlide(current + 1);
+      scheduleResume();
+    });
+
+    gallery.addEventListener("mouseenter", pauseAutoplay);
+    gallery.addEventListener("mouseleave", scheduleResume);
+    gallery.addEventListener("focusin", pauseAutoplay);
+    gallery.addEventListener("focusout", scheduleResume);
+    gallery.addEventListener("touchstart", pauseAutoplay, { passive: true });
+    gallery.addEventListener("touchend", scheduleResume, { passive: true });
+
+    let scrollTimer = null;
+    track.addEventListener("scroll", () => {
+      if (!slides.length) return;
+      if (!scrollingByCode) {
+        pauseAutoplay();
+        scheduleResume();
+      }
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(() => {
+        const nearest = slides.reduce((best, slide, index) => {
+          const distance = Math.abs(track.scrollLeft - slide.offsetLeft);
+          return distance < best.distance ? { index, distance } : best;
+        }, { index: current, distance: Number.POSITIVE_INFINITY });
+        current = nearest.index;
+        updateDots();
+      }, 120);
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        pauseAutoplay();
+      } else {
+        scheduleResume();
+      }
+    });
+
+    reducedMotion.addEventListener?.("change", () => {
+      pauseAutoplay();
+      if (!reducedMotion.matches) startAutoplay();
+    });
+
+    goToSlide(0, "auto");
+    updateDots();
+    startAutoplay();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   $("#year").textContent = new Date().getFullYear();
 
@@ -312,6 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setLanguage(lang);
   updateQuickResult("Back Pain Care", false);
   updateInstallButtons();
+  initAutoGalleries();
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js").catch(console.error);
