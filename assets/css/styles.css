@@ -684,11 +684,11 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   -ms-overflow-style:none;
   scrollbar-width:none;
 }
-.is-loop-gallery .auto-gallery-track,
-.is-loop-gallery .moments-track,
-.is-loop-gallery .clinic-track{
+.is-continuous-gallery .auto-gallery-track,
+.is-continuous-gallery .moments-track,
+.is-continuous-gallery .clinic-track{
   scroll-snap-type:none;
-  scroll-behavior:smooth;
+  scroll-behavior:auto;
 }
 .auto-gallery-track::-webkit-scrollbar,
 .moments-track::-webkit-scrollbar,
@@ -749,8 +749,8 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .clinic-card-slide{
   scroll-snap-align:start;
 }
-.is-loop-gallery .moment-card,
-.is-loop-gallery .clinic-card-slide{
+.is-continuous-gallery .moment-card,
+.is-continuous-gallery .clinic-card-slide{
   scroll-snap-align:none;
 }
 .moment-card img,
