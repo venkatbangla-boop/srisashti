@@ -244,7 +244,7 @@ function initAutoGalleries() {
     const nextBtn = $(".auto-gallery-next", gallery);
     const dotsWrap = $(".auto-gallery-dots", gallery);
     if (!track || !originalSlides.length || !dotsWrap) return;
-    gallery.classList.add("is-loop-gallery");
+    gallery.classList.add("is-loop-gallery", "is-continuous-gallery");
 
     function prepareClone(slide) {
       slide.classList.remove("reveal");
@@ -276,7 +276,7 @@ function initAutoGalleries() {
     let resumeTimer = null;
     let scrollingByCode = false;
     const autoplayEnabled = gallery.dataset.autoplay === "true";
-    const autoplayDelay = Number.parseInt(gallery.dataset.interval || "4800", 10);
+    const autoplayInterval = Number.parseInt(gallery.dataset.interval || "4800", 10);
     const interactionResumeDelay = 7000;
     const slideSettleDelay = reducedMotion.matches ? 0 : 520;
     let userInteracting = false;
@@ -299,9 +299,21 @@ function initAutoGalleries() {
       return $$(".auto-gallery-slide", track);
     }
 
+    function getLoopMetrics() {
+      const slides = getSlides();
+      const stride = slideCount > 1 && slides.length > 1
+        ? slides[1].offsetLeft - slides[0].offsetLeft
+        : 0;
+      return {
+        slides,
+        lowerBound: slides[0]?.offsetLeft ?? 0,
+        upperBound: slides[slideCount + 1]?.offsetLeft ?? 0,
+        cycleWidth: stride * slideCount
+      };
+    }
+
     function jumpToRenderedSlide(index) {
       const slides = getSlides();
-      if (!slides[index]) return;
       currentRendered = index;
       current = renderedToLogical(index);
       track.scrollTo({
@@ -311,20 +323,29 @@ function initAutoGalleries() {
       updateDots();
     }
 
-    function normalizeRenderedSlide() {
+    function normalizeLoopPosition() {
       if (slideCount <= 1) return;
-      if (currentRendered === 0) {
-        jumpToRenderedSlide(slideCount);
-      } else if (currentRendered === slideCount + 1) {
-        jumpToRenderedSlide(1);
+      const { lowerBound, upperBound, cycleWidth } = getLoopMetrics();
+      if (!cycleWidth) return;
+      if (track.scrollLeft <= lowerBound) {
+        track.scrollLeft += cycleWidth;
+        currentRendered = slideCount;
+        current = slideCount - 1;
+      } else if (track.scrollLeft >= upperBound) {
+        track.scrollLeft -= cycleWidth;
+        currentRendered = 1;
+        current = 0;
       }
+      updateDots();
     }
 
     function syncCurrentFromScroll() {
       const slides = getSlides();
       if (!slides.length) return;
+      const viewportCenter = track.scrollLeft + (track.clientWidth / 2);
       const nearest = slides.reduce((best, slide, index) => {
-        const distance = Math.abs(track.scrollLeft - slide.offsetLeft);
+        const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
+        const distance = Math.abs(viewportCenter - slideCenter);
         return distance < best.distance ? { index, distance } : best;
       }, { index: currentRendered, distance: Number.POSITIVE_INFINITY });
       const logical = renderedToLogical(nearest.index);
@@ -332,9 +353,6 @@ function initAutoGalleries() {
         currentRendered = nearest.index;
         current = logical;
         updateDots();
-      }
-      if (!scrollingByCode && (currentRendered === 0 || currentRendered === slideCount + 1)) {
-        normalizeRenderedSlide();
       }
     }
 
@@ -350,10 +368,8 @@ function initAutoGalleries() {
       });
       updateDots();
       window.setTimeout(() => {
-        normalizeRenderedSlide();
-        current = renderedToLogical(currentRendered);
-        updateDots();
         scrollingByCode = false;
+        normalizeLoopPosition();
       }, slideSettleDelay);
     }
 
@@ -367,7 +383,7 @@ function initAutoGalleries() {
       autoplayTimer = window.setInterval(() => {
         if (document.hidden || userInteracting) return;
         goToRenderedSlide(currentRendered + 1);
-      }, Number.isFinite(autoplayDelay) ? autoplayDelay : 4800);
+      }, Number.isFinite(autoplayInterval) ? autoplayInterval : 4800);
     }
 
     function scheduleResume() {
@@ -434,7 +450,8 @@ function initAutoGalleries() {
       }
       window.clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(() => {
-        if (!scrollingByCode) syncCurrentFromScroll();
+        normalizeLoopPosition();
+        syncCurrentFromScroll();
       }, 120);
     }, { passive: true });
 

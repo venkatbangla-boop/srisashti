@@ -34,18 +34,6 @@
           "type": "image/png"
         }
       ]
-    },
-    {
-      "name": "Call Palladam",
-      "short_name": "Call",
-      "url": "tel:+917845707427",
-      "icons": [
-        {
-          "src": "/assets/icons/pwa/icon-96.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
     }
   ]
 }
