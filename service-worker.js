@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v36-continuous-gallery-mobile";
+const CACHE_NAME = "sri-sashti-v36-premium-gallery-final";
 const ASSETS = [
   "/",
   "/index.html",
@@ -19,6 +19,11 @@ const ASSETS = [
   "/assets/images/gallery/gallery-post-operative-rehab.webp",
   "/assets/images/gallery/gallery-shoulder-mobility-care.webp",
   "/assets/images/gallery/gallery-sports-injury-rehab.webp",
+  "/assets/images/clinic-view-consultation-area.webp",
+  "/assets/images/clinic-view-treatment-bed.webp",
+  "/assets/images/clinic-view-electrotherapy-setup.webp",
+  "/assets/images/clinic-view-exercise-area.webp",
+  "/assets/images/clinic-view-recovery-support-space.webp",
   "/assets/images/card-crops/clinic-view-consultation-area.webp",
   "/assets/images/card-crops/clinic-view-exercise-guidance.webp",
   "/assets/images/card-crops/gallery-back-pain-care.webp",

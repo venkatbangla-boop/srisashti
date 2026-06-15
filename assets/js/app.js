@@ -244,7 +244,7 @@ function initAutoGalleries() {
     const nextBtn = $(".auto-gallery-next", gallery);
     const dotsWrap = $(".auto-gallery-dots", gallery);
     if (!track || !originalSlides.length || !dotsWrap) return;
-    gallery.classList.add("is-continuous-gallery");
+    gallery.classList.add("is-loop-gallery");
 
     function prepareClone(slide) {
       slide.classList.remove("reveal");
@@ -276,11 +276,10 @@ function initAutoGalleries() {
     let resumeTimer = null;
     let scrollingByCode = false;
     const autoplayEnabled = gallery.dataset.autoplay === "true";
-    const autoplaySpeed = Number.parseFloat(gallery.dataset.speed || "28");
-    const interactionResumeDelay = 3200;
-    const slideSettleDelay = reducedMotion.matches ? 0 : 420;
+    const autoplayDelay = Number.parseInt(gallery.dataset.interval || "4800", 10);
+    const interactionResumeDelay = 7000;
+    const slideSettleDelay = reducedMotion.matches ? 0 : 520;
     let userInteracting = false;
-    let virtualScrollLeft = 0;
 
     function clearTimers() {
       window.clearInterval(autoplayTimer);
@@ -300,51 +299,32 @@ function initAutoGalleries() {
       return $$(".auto-gallery-slide", track);
     }
 
-    function getLoopMetrics() {
-      const slides = getSlides();
-      const stride = slideCount > 1 && slides.length > 1
-        ? slides[1].offsetLeft - slides[0].offsetLeft
-        : 0;
-      return {
-        slides,
-        lowerBound: slides[0]?.offsetLeft ?? 0,
-        upperBound: slides[slideCount + 1]?.offsetLeft ?? 0,
-        cycleWidth: stride * slideCount
-      };
-    }
-
     function jumpToRenderedSlide(index) {
       const slides = getSlides();
+      if (!slides[index]) return;
       currentRendered = index;
       current = renderedToLogical(index);
-      virtualScrollLeft = slides[currentRendered].offsetLeft;
       track.scrollTo({
-        left: virtualScrollLeft,
+        left: slides[currentRendered].offsetLeft,
         behavior: "auto"
       });
       updateDots();
     }
 
-    function normalizeLoopPosition() {
+    function normalizeRenderedSlide() {
       if (slideCount <= 1) return;
-      const { lowerBound, upperBound, cycleWidth } = getLoopMetrics();
-      if (!cycleWidth) return;
-      if (track.scrollLeft <= lowerBound) {
-        track.scrollLeft += cycleWidth;
-        virtualScrollLeft = track.scrollLeft;
-      } else if (track.scrollLeft >= upperBound) {
-        track.scrollLeft -= cycleWidth;
-        virtualScrollLeft = track.scrollLeft;
+      if (currentRendered === 0) {
+        jumpToRenderedSlide(slideCount);
+      } else if (currentRendered === slideCount + 1) {
+        jumpToRenderedSlide(1);
       }
     }
 
     function syncCurrentFromScroll() {
       const slides = getSlides();
       if (!slides.length) return;
-      const viewportCenter = track.scrollLeft + (track.clientWidth / 2);
       const nearest = slides.reduce((best, slide, index) => {
-        const slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
-        const distance = Math.abs(viewportCenter - slideCenter);
+        const distance = Math.abs(track.scrollLeft - slide.offsetLeft);
         return distance < best.distance ? { index, distance } : best;
       }, { index: currentRendered, distance: Number.POSITIVE_INFINITY });
       const logical = renderedToLogical(nearest.index);
@@ -352,6 +332,9 @@ function initAutoGalleries() {
         currentRendered = nearest.index;
         current = logical;
         updateDots();
+      }
+      if (!scrollingByCode && (currentRendered === 0 || currentRendered === slideCount + 1)) {
+        normalizeRenderedSlide();
       }
     }
 
@@ -361,15 +344,16 @@ function initAutoGalleries() {
       currentRendered = targetIndex;
       current = renderedToLogical(targetIndex);
       scrollingByCode = true;
-      virtualScrollLeft = slides[currentRendered].offsetLeft;
       track.scrollTo({
-        left: virtualScrollLeft,
+        left: slides[currentRendered].offsetLeft,
         behavior: reducedMotion.matches ? "auto" : behavior
       });
       updateDots();
       window.setTimeout(() => {
+        normalizeRenderedSlide();
+        current = renderedToLogical(currentRendered);
+        updateDots();
         scrollingByCode = false;
-        normalizeLoopPosition();
       }, slideSettleDelay);
     }
 
@@ -380,14 +364,10 @@ function initAutoGalleries() {
     function startAutoplay() {
       if (!autoplayEnabled || reducedMotion.matches || document.hidden || userInteracting || slideCount <= 1) return;
       window.clearInterval(autoplayTimer);
-      virtualScrollLeft = track.scrollLeft;
       autoplayTimer = window.setInterval(() => {
         if (document.hidden || userInteracting) return;
-        virtualScrollLeft -= autoplaySpeed / 60;
-        track.scrollLeft = virtualScrollLeft;
-        normalizeLoopPosition();
-        syncCurrentFromScroll();
-      }, 16);
+        goToRenderedSlide(currentRendered + 1);
+      }, Number.isFinite(autoplayDelay) ? autoplayDelay : 4800);
     }
 
     function scheduleResume() {
@@ -454,9 +434,7 @@ function initAutoGalleries() {
       }
       window.clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(() => {
-        virtualScrollLeft = track.scrollLeft;
-        normalizeLoopPosition();
-        syncCurrentFromScroll();
+        if (!scrollingByCode) syncCurrentFromScroll();
       }, 120);
     }, { passive: true });
 
