@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v44-doctor-experience";
+const CACHE_NAME = "sri-sashti-v46-refine-logo-splash";
 const ASSETS = [
   "/",
   "/index.html",

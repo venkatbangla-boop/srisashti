@@ -50,7 +50,7 @@ button,input,select,textarea{font:inherit}
   background:linear-gradient(180deg,#ffffff 0%,#f4fbf8 100%);
   opacity:1;
   visibility:visible;
-  transition:opacity .16s ease,visibility .16s ease;
+  transition:opacity .18s ease,visibility .18s ease;
 }
 .logo-splash[hidden]{display:none}
 .logo-splash.is-clearing{
@@ -58,36 +58,77 @@ button,input,select,textarea{font:inherit}
   visibility:hidden;
 }
 .logo-splash-card{
+  position:relative;
   display:grid;
   justify-items:center;
   gap:14px;
   text-align:center;
-  transition:opacity .24s ease,transform .24s ease;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.logo-splash-card::before{
+  content:"";
+  position:absolute;
+  width:118px;
+  height:118px;
+  top:8px;
+  border-radius:999px;
+  background:radial-gradient(circle,rgba(14,116,104,.16),rgba(14,116,104,0) 68%);
+  filter:blur(4px);
+  animation:logoSplashGlow 1.4s ease-in-out infinite;
+  pointer-events:none;
 }
 .logo-splash.is-hiding .logo-splash-card{
   opacity:0;
-  transform:translateY(-4px) scale(.985);
+  transform:translateY(-2px);
 }
-.logo-splash-video{
-  width:clamp(120px,34vw,150px);
-  height:clamp(120px,34vw,150px);
+.logo-splash-mark{
+  position:relative;
+  z-index:1;
+  width:clamp(120px,32vw,145px);
+  height:clamp(120px,32vw,145px);
+}
+.logo-splash-video,
+.logo-splash-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   object-fit:contain;
   border-radius:24px;
+  filter:drop-shadow(0 14px 24px rgba(14,116,104,.11));
+}
+.logo-splash-video{
+  opacity:0;
+  background:transparent;
+  transition:opacity .16s ease;
+}
+.logo-splash.video-ready .logo-splash-video{
+  opacity:1;
+}
+.logo-splash-fallback{
   background:#f4fbf8;
-  filter:drop-shadow(0 16px 28px rgba(14,116,104,.12));
+  transition:opacity .16s ease;
+}
+.logo-splash.video-ready .logo-splash-fallback{
+  opacity:0;
 }
 .logo-splash-copy strong{
+  position:relative;
+  z-index:1;
   display:block;
   color:var(--green-strong);
-  font-size:1.04rem;
+  font-size:.98rem;
   line-height:1.2;
+  font-weight:900;
 }
 .logo-splash-copy span{
+  position:relative;
+  z-index:1;
   display:block;
   margin-top:4px;
   color:var(--ink-soft);
   font-weight:800;
-  font-size:.88rem;
+  font-size:.84rem;
 }
 
 .site-header{
@@ -1226,12 +1267,20 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   0%,100%{transform:scale(.96);opacity:.55}
   50%{transform:scale(1.04);opacity:.88}
 }
+@keyframes logoSplashGlow{
+  0%,100%{opacity:.5;transform:scale(.96)}
+  50%{opacity:.9;transform:scale(1.04)}
+}
 
 @media (min-width:760px){
   body{padding-bottom:0}
-  .logo-splash-video{
-    width:170px;
-    height:170px;
+  .logo-splash-card::before{
+    width:142px;
+    height:142px;
+  }
+  .logo-splash-mark{
+    width:160px;
+    height:160px;
   }
   .menubtn{display:none}
   .navlinks{display:flex;gap:24px;margin-left:28px}

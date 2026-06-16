@@ -527,7 +527,7 @@ function initLogoSplash() {
       window.setTimeout(() => {
         splash.classList.add("is-clearing");
         window.setTimeout(() => splash.remove(), reducedMotion ? 0 : 180);
-      }, reducedMotion ? 0 : 260);
+      }, reducedMotion ? 0 : 120);
     }, delay);
   }
 
@@ -538,22 +538,26 @@ function initLogoSplash() {
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
+    if (video.readyState >= 2) splash.classList.add("video-ready");
+    video.addEventListener("loadeddata", () => splash.classList.add("video-ready"), { once:true });
+    video.addEventListener("canplay", () => splash.classList.add("video-ready"), { once:true });
+    video.addEventListener("playing", () => splash.classList.add("video-ready"), { once:true });
     video.addEventListener("error", () => closeSplash(1100), { once:true, capture:true });
   }
 
   if (reducedMotion) {
     video?.removeAttribute("autoplay");
     video?.pause();
-    closeSplash(900);
+    closeSplash(700);
     return;
   }
 
   const playPromise = video?.play();
   if (playPromise && typeof playPromise.catch === "function") {
-    playPromise.catch(() => closeSplash(1100));
+    playPromise.catch(() => closeSplash(900));
   }
 
-  closeSplash(1900);
+  closeSplash(1500);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
