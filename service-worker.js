@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v38-treatment-image-fixes";
+const CACHE_NAME = "sri-sashti-v39-treatment-card-corrections";
 const ASSETS = [
   "/",
   "/index.html",
@@ -19,6 +19,8 @@ const ASSETS = [
   "/assets/images/core-stability-exercise-card.webp",
   "/assets/images/pre-post-operative-rehabilitation-card.webp",
   "/assets/images/sports-injury-rehab-card.webp",
+  "/assets/images/fracture-rehabilitation-card.webp",
+  "/assets/images/facial-palsy-neuro-care-card.webp",
   "/assets/images/gallery-core-stability-exercise.webp",
   "/assets/images/gallery-post-operative-rehab.webp",
   "/assets/images/gallery-sports-injury-rehab.webp",
