@@ -1250,7 +1250,8 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .branch-option strong,
 .branch-option span,
 .branch-option small,
-.branch-option em{
+.branch-option em,
+.branch-option-cta{
   display:block;
 }
 .branch-option strong{
@@ -1268,11 +1269,40 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   color:var(--ink);
   font-weight:900;
 }
-.branch-option em{
-  margin-top:10px;
-  color:var(--green);
+.branch-option .branch-option-cta{
+  min-height:46px;
+  margin-top:13px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--green),var(--sea));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
   font-style:normal;
-  font-weight:900;
+  font-weight:950;
+  line-height:1.15;
+  box-shadow:0 14px 28px rgba(14,116,104,.22);
+}
+.branch-option .branch-option-cta,
+.branch-option .branch-option-cta span,
+.branch-option .branch-option-cta .icon{
+  color:#fff;
+}
+.branch-option .branch-option-cta .icon{
+  display:inline-flex;
+  width:1.05em;
+  height:1.05em;
+  margin:0;
+  flex:0 0 auto;
+}
+.branch-option .branch-option-cta [data-branch-action-label]{
+  display:inline;
+  margin:0;
+  font-weight:950;
+}
+.branch-option.is-whatsapp .branch-option-cta{
+  background:linear-gradient(135deg,#25d366,var(--green));
 }
 .sheet-card label{font-weight:900;color:#355058}
 .sheet-card input,.sheet-card select,.sheet-card textarea{

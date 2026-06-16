@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v48-logo-splash-size";
+const CACHE_NAME = "sri-sashti-v49-branch-action-buttons";
 const ASSETS = [
   "/",
   "/index.html",

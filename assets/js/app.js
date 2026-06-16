@@ -79,14 +79,41 @@ let branchActionProblem = "";
 
 const branchContacts = {
   palladam: {
-    name: "Palladam Clinic",
+    name: "Palladam",
+    phone: "+91 78457 07427",
     tel: "tel:+917845707427",
     whatsapp: "917845707427"
   },
   senjeri: {
-    name: "Senjeri Pirivu Clinic",
+    name: "Senjeri Pirivu",
+    phone: "+91 73972 85636",
     tel: "tel:+917397285636",
     whatsapp: "917397285636"
+  }
+};
+
+const branchActionCopy = {
+  call: {
+    title: {
+      en: "Choose branch to call",
+      ta: "அழைக்க கிளையைத் தேர்வு செய்யவும்"
+    },
+    subtitle: {
+      en: "Select the clinic branch you want to call.",
+      ta: "அழைக்க வேண்டிய கிளையைத் தேர்வு செய்யவும்."
+    },
+    icon: "icon-call"
+  },
+  whatsapp: {
+    title: {
+      en: "Choose branch for WhatsApp",
+      ta: "WhatsApp செய்ய கிளையைத் தேர்வு செய்யவும்"
+    },
+    subtitle: {
+      en: "Select the clinic branch to continue on WhatsApp.",
+      ta: "WhatsApp-ல் தொடர கிளையைத் தேர்வு செய்யவும்."
+    },
+    icon: "icon-whatsapp-chat"
   }
 };
 
@@ -220,20 +247,46 @@ function closeSheet() {
 }
 
 function updateBranchActionLabels() {
-  const isCall = branchActionType === "call";
-  const en = isCall ? "Call this branch" : "WhatsApp this branch";
-  const ta = isCall ? "இந்த கிளைக்கு அழைக்கவும்" : "இந்த கிளைக்கு WhatsApp செய்யவும்";
+  const action = branchActionType === "call" ? "call" : "whatsapp";
+  const copy = branchActionCopy[action];
+  const title = $("[data-branch-action-title]");
+  const subtitle = $("[data-branch-action-subtitle]");
+
+  if (title) {
+    title.dataset.en = copy.title.en;
+    title.dataset.ta = copy.title.ta;
+    title.textContent = copy.title[lang] || copy.title.en;
+  }
+
+  if (subtitle) {
+    subtitle.dataset.en = copy.subtitle.en;
+    subtitle.dataset.ta = copy.subtitle.ta;
+    subtitle.textContent = copy.subtitle[lang] || copy.subtitle.en;
+  }
+
   $$("[data-branch-action-label]").forEach(label => {
+    const en = label.dataset[`${action}En`];
+    const ta = label.dataset[`${action}Ta`];
     label.dataset.en = en;
     label.dataset.ta = ta;
     label.textContent = lang === "ta" ? ta : en;
+  });
+
+  $$("[data-branch-action-icon]").forEach(icon => {
+    icon.classList.toggle("icon-call", action === "call");
+    icon.classList.toggle("icon-whatsapp-chat", action === "whatsapp");
+    icon.innerHTML = iconMarkup[copy.icon] || "";
+  });
+
+  $$("[data-branch-choice]").forEach(button => {
+    button.classList.toggle("is-whatsapp", action === "whatsapp");
   });
 }
 
 function openBranchActionSheet(actionType, selectedProblemValue) {
   const sheet = $("#branchActionSheet");
   if (!sheet) return;
-  branchActionType = ["call", "whatsapp", "book"].includes(actionType) ? actionType : "call";
+  branchActionType = actionType === "call" ? "call" : "whatsapp";
   branchActionProblem = selectedProblemValue || "";
   lastFocus = document.activeElement;
   updateBranchActionLabels();
