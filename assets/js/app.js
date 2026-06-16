@@ -106,6 +106,24 @@ function trackEvent(name) {
   if (typeof gtag === "function") gtag("event", name);
 }
 
+function initDoctorExperience() {
+  $$("[data-experience-start]").forEach(el => {
+    const start = new Date(`${el.dataset.experienceStart}T00:00:00`);
+    if (Number.isNaN(start.getTime())) return;
+
+    const today = new Date();
+    let years = today.getFullYear() - start.getFullYear();
+    const beforeAnniversary =
+      today.getMonth() < start.getMonth() ||
+      (today.getMonth() === start.getMonth() && today.getDate() < start.getDate());
+    if (beforeAnniversary) years -= 1;
+
+    el.textContent = lang === "ta"
+      ? `${years}+ ஆண்டுகள் மருத்துவ அனுபவம்`
+      : `${years}+ years clinical experience`;
+  });
+}
+
 function setLanguage(nextLang) {
   lang = nextLang;
   document.documentElement.lang = lang === "ta" ? "ta" : "en";
@@ -122,6 +140,7 @@ function setLanguage(nextLang) {
   if (toggle) toggle.textContent = lang === "en" ? "தமிழ்" : "English";
 
   localStorage.setItem("ss_lang", lang);
+  initDoctorExperience();
   updateQuickResult(selectedProblem, false);
   updateSelectedSummary();
 }

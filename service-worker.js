@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v43-logo-video-bg-cleanup";
+const CACHE_NAME = "sri-sashti-v44-doctor-experience";
 const ASSETS = [
   "/",
   "/index.html",
