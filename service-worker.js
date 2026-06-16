@@ -1,10 +1,12 @@
-const CACHE_NAME = "sri-sashti-v41-doctor-linkedin-profile";
+const CACHE_NAME = "sri-sashti-v43-logo-video-bg-cleanup";
 const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
   "/assets/css/styles.css",
   "/assets/js/app.js",
+  "/assets/videos/sashti-logo-motion.mp4",
+  "/assets/videos/sashti-logo-poster.webp",
   "/favicon.ico",
   "/favicon-48x48.png",
   "/favicon-96x96.png",
