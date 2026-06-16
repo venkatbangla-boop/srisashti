@@ -1214,6 +1214,11 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
 .sheet-handle{width:48px;height:5px;border-radius:999px;background:#d3e4df;margin:4px auto 2px}
 .sheet-head{display:flex;justify-content:space-between;align-items:start;gap:10px}
 .sheet-head h2{font-size:1.5rem}
+.sheet-head p{
+  margin:6px 0 0;
+  color:var(--ink-soft);
+  font-weight:800;
+}
 .sheet-head button{
   border:0;
   background:var(--green-soft);
@@ -1224,6 +1229,50 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   color:var(--green);
 }
 .selected-summary{margin:6px 0 0;color:var(--green);font-weight:900;font-size:.92rem}
+.branch-action-card{
+  gap:14px;
+}
+.branch-option-list{
+  display:grid;
+  gap:10px;
+}
+.branch-option{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#ffffff,#f4fbf8);
+  border-radius:20px;
+  padding:15px;
+  text-align:left;
+  color:var(--ink);
+  cursor:pointer;
+  box-shadow:var(--shadow-soft);
+}
+.branch-option strong,
+.branch-option span,
+.branch-option small,
+.branch-option em{
+  display:block;
+}
+.branch-option strong{
+  color:var(--green-strong);
+  font-size:1rem;
+  line-height:1.2;
+}
+.branch-option span{
+  margin-top:6px;
+  color:var(--ink-soft);
+  font-weight:750;
+}
+.branch-option small{
+  margin-top:8px;
+  color:var(--ink);
+  font-weight:900;
+}
+.branch-option em{
+  margin-top:10px;
+  color:var(--green);
+  font-style:normal;
+  font-weight:900;
+}
 .sheet-card label{font-weight:900;color:#355058}
 .sheet-card input,.sheet-card select,.sheet-card textarea{
   width:100%;

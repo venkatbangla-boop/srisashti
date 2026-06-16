@@ -200,8 +200,8 @@
           <p data-en="Founder-led physiotherapy for back pain, neck pain, knee pain, sports injury and post-surgery recovery, with quick WhatsApp booking and branch guidance." data-ta="முதுகு வலி, கழுத்து வலி, முழங்கால் வலி, sports injury மற்றும் surgery பின் மீட்பிற்கான founder-led physiotherapy, WhatsApp மூலம் விரைவு booking மற்றும் branch guidance உடன்.">Founder-led physiotherapy for back pain, neck pain, knee pain, sports injury and post-surgery recovery, with quick WhatsApp booking and branch guidance.</p>
 
           <div class="hero-actions">
-            <a class="btn primary" data-track="call_palladam_hero" href="tel:+917845707427"><span class="icon-label"><span class="icon icon-call" aria-hidden="true"></span><span data-en="Call Now" data-ta="இப்போது அழைக்க">Call Now</span></span></a>
-            <a class="btn whatsapp" data-track="whatsapp_hero" href="https://wa.me/917845707427?text=Hello%20Sri%20Sashti%20Physiotherapy%20Clinic%2C%20I%20want%20to%20book%20an%20appointment." target="_blank" rel="noopener"><span class="icon-label"><span class="icon icon-whatsapp-chat" aria-hidden="true"></span><span>WhatsApp</span></span></a>
+            <a class="btn primary" data-track="call_hero" data-branch-action="call" href="#branchActionSheet"><span class="icon-label"><span class="icon icon-call" aria-hidden="true"></span><span data-en="Call Now" data-ta="இப்போது அழைக்க">Call Now</span></span></a>
+            <a class="btn whatsapp" data-track="whatsapp_hero" data-branch-action="whatsapp" href="#branchActionSheet"><span class="icon-label"><span class="icon icon-whatsapp-chat" aria-hidden="true"></span><span>WhatsApp</span></span></a>
           </div>
 
           <button class="hero-book-card" type="button" data-open-booking data-track="hero_quick_booking" aria-label="Book physiotherapy appointment">
@@ -239,8 +239,8 @@
 
     <section class="quick-zone" id="quick">
       <div class="quick-actions" aria-label="Fast contact actions">
-        <a data-track="call_quick" href="tel:+917845707427"><b class="icon-label"><span class="icon icon-call" aria-hidden="true"></span><span data-en="Call" data-ta="அழைக்க">Call</span></b><small data-en="Instant help" data-ta="உடனடி உதவி">Instant help</small></a>
-        <a data-track="whatsapp_quick" href="https://wa.me/917845707427?text=Hello%20Sri%20Sashti%20Physiotherapy%20Clinic%2C%20I%20want%20to%20book%20an%20appointment." target="_blank" rel="noopener"><b class="icon-label"><span class="icon icon-whatsapp-chat" aria-hidden="true"></span><span>WhatsApp</span></b><small data-en="Chat with us" data-ta="செய்தி அனுப்பு">Chat with us</small></a>
+        <a data-track="call_quick" data-branch-action="call" href="#branchActionSheet"><b class="icon-label"><span class="icon icon-call" aria-hidden="true"></span><span data-en="Call" data-ta="அழைக்க">Call</span></b><small data-en="Instant help" data-ta="உடனடி உதவி">Instant help</small></a>
+        <a data-track="whatsapp_quick" data-branch-action="whatsapp" href="#branchActionSheet"><b class="icon-label"><span class="icon icon-whatsapp-chat" aria-hidden="true"></span><span>WhatsApp</span></b><small data-en="Chat with us" data-ta="செய்தி அனுப்பு">Chat with us</small></a>
         <a href="#branches" aria-label="Palladam physiotherapy clinic and Senjeri Pirivu physiotherapy clinic"><b class="icon-label"><span class="icon icon-directions" aria-hidden="true"></span><span data-en="Directions" data-ta="வழிகாட்டி">Directions</span></b><small data-en="Find branch" data-ta="கிளை காண">Find branch</small></a>
         <button type="button" data-open-booking aria-label="Book physiotherapy appointment"><b class="icon-label"><span class="icon icon-book-calendar" aria-hidden="true"></span><span data-en="Book" data-ta="பதிவு">Book</span></b><small data-en="Quick form" data-ta="விரைவு படிவம்">Quick form</small></button>
       </div>
@@ -819,10 +819,39 @@
   </footer>
 
   <nav class="bottom-nav" aria-label="Quick mobile actions">
-    <a data-track="bottom_call" href="tel:+917845707427"><span class="icon icon-call" aria-hidden="true"></span><span data-en="Call" data-ta="அழைக்க">Call</span></a>
-    <a data-track="bottom_whatsapp" href="https://wa.me/917845707427?text=Hello%20Sri%20Sashti%20Physiotherapy%20Clinic%2C%20I%20want%20to%20book%20an%20appointment." target="_blank" rel="noopener"><span class="icon icon-whatsapp-chat" aria-hidden="true"></span><span>WhatsApp</span></a>
+    <a data-track="bottom_call" data-branch-action="call" href="#branchActionSheet"><span class="icon icon-call" aria-hidden="true"></span><span data-en="Call" data-ta="அழைக்க">Call</span></a>
+    <a data-track="bottom_whatsapp" data-branch-action="whatsapp" href="#branchActionSheet"><span class="icon icon-whatsapp-chat" aria-hidden="true"></span><span>WhatsApp</span></a>
     <button type="button" data-open-booking aria-label="Book physiotherapy appointment"><span class="icon icon-book-calendar" aria-hidden="true"></span><span data-en="Book" data-ta="பதிவு">Book</span></button>
   </nav>
+
+  <div class="booking-sheet branch-action-sheet" id="branchActionSheet" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="branchActionTitle">
+    <div class="sheet-backdrop" data-close-branch-action></div>
+    <div class="sheet-card branch-action-card" role="document">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div>
+          <h2 id="branchActionTitle" data-en="Choose branch" data-ta="கிளையைத் தேர்வு செய்யவும்">Choose branch</h2>
+          <p data-en="Select the clinic branch to continue." data-ta="தொடர கிளையைத் தேர்வு செய்யவும்.">Select the clinic branch to continue.</p>
+        </div>
+        <button type="button" data-close-branch-action aria-label="Close">×</button>
+      </div>
+      <div class="branch-option-list" aria-label="Choose clinic branch">
+        <button type="button" class="branch-option" data-branch-choice="palladam">
+          <strong data-en="Palladam Clinic" data-ta="பல்லடம் கிளினிக்">Palladam Clinic</strong>
+          <span>N G R Salai Road, Mullai Nagar, Palladam</span>
+          <small>+91 78457 07427</small>
+          <em data-branch-action-label data-en="Call this branch" data-ta="இந்த கிளைக்கு அழைக்கவும்">Call this branch</em>
+        </button>
+        <button type="button" class="branch-option" data-branch-choice="senjeri">
+          <strong data-en="Senjeri Pirivu Clinic" data-ta="செஞ்சேரி பிரிவு கிளினிக்">Senjeri Pirivu Clinic</strong>
+          <span>Pollachi / Palladam Main Road, Senjeri Pirivu</span>
+          <small>+91 73972 85636</small>
+          <em data-branch-action-label data-en="Call this branch" data-ta="இந்த கிளைக்கு அழைக்கவும்">Call this branch</em>
+        </button>
+      </div>
+      <button class="btn outline full" type="button" data-close-branch-action data-en="Cancel" data-ta="ரத்து செய்">Cancel</button>
+    </div>
+  </div>
 
   <div class="booking-sheet" id="bookingSheet" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bookingTitle">
     <div class="sheet-backdrop" data-close-booking></div>

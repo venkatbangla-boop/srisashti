@@ -74,6 +74,21 @@ let selectedProblem = "Back Pain Care";
 let lastFocus = null;
 const animatedCounts = new WeakSet();
 let deferredInstallPrompt = null;
+let branchActionType = "call";
+let branchActionProblem = "";
+
+const branchContacts = {
+  palladam: {
+    name: "Palladam Clinic",
+    tel: "tel:+917845707427",
+    whatsapp: "917845707427"
+  },
+  senjeri: {
+    name: "Senjeri Pirivu Clinic",
+    tel: "tel:+917397285636",
+    whatsapp: "917397285636"
+  }
+};
 
 function getInstallButtons() {
   return [$("#installAppBtn"), $("#installAppBtnMobile")].filter(Boolean);
@@ -143,6 +158,7 @@ function setLanguage(nextLang) {
   initDoctorExperience();
   updateQuickResult(selectedProblem, false);
   updateSelectedSummary();
+  updateBranchActionLabels();
 }
 
 function updateSelectedSummary() {
@@ -199,12 +215,68 @@ function closeSheet() {
   if (!sheet) return;
   sheet.classList.remove("open");
   sheet.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("sheet-open");
+  if (!$(".booking-sheet.open")) document.body.classList.remove("sheet-open");
   if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
 }
 
+function updateBranchActionLabels() {
+  const isCall = branchActionType === "call";
+  const en = isCall ? "Call this branch" : "WhatsApp this branch";
+  const ta = isCall ? "இந்த கிளைக்கு அழைக்கவும்" : "இந்த கிளைக்கு WhatsApp செய்யவும்";
+  $$("[data-branch-action-label]").forEach(label => {
+    label.dataset.en = en;
+    label.dataset.ta = ta;
+    label.textContent = lang === "ta" ? ta : en;
+  });
+}
+
+function openBranchActionSheet(actionType, selectedProblemValue) {
+  const sheet = $("#branchActionSheet");
+  if (!sheet) return;
+  branchActionType = ["call", "whatsapp", "book"].includes(actionType) ? actionType : "call";
+  branchActionProblem = selectedProblemValue || "";
+  lastFocus = document.activeElement;
+  updateBranchActionLabels();
+  sheet.classList.add("open");
+  sheet.setAttribute("aria-hidden", "false");
+  document.body.classList.add("sheet-open");
+  trackEvent(`branch_action_sheet_${branchActionType}_open`);
+  setTimeout(() => $(".branch-option", sheet)?.focus(), 250);
+}
+
+function closeBranchActionSheet() {
+  const sheet = $("#branchActionSheet");
+  if (!sheet) return;
+  sheet.classList.remove("open");
+  sheet.setAttribute("aria-hidden", "true");
+  if (!$(".booking-sheet.open")) document.body.classList.remove("sheet-open");
+  if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+}
+
+function getWhatsAppMessage(branchName, problem) {
+  const text = problem
+    ? `Hello Sri Sashti Physiotherapy Clinic, I want to book an appointment for ${problem}. Preferred branch: ${branchName}.`
+    : `Hello Sri Sashti Physiotherapy Clinic, I want to book an appointment. Preferred branch: ${branchName}.`;
+  return encodeURIComponent(text);
+}
+
+function runBranchAction(branchKey) {
+  const branch = branchContacts[branchKey];
+  if (!branch) return;
+  const isCall = branchActionType === "call";
+  trackEvent(`branch_${branchActionType}_${branchKey}`);
+  closeBranchActionSheet();
+  if (isCall) {
+    window.location.href = branch.tel;
+    return;
+  }
+  const problem = branchActionProblem || (branchActionType === "book" ? selectedProblem : "");
+  const text = getWhatsAppMessage(branch.name, problem);
+  window.open(`https://wa.me/${branch.whatsapp}?text=${text}`, "_blank", "noopener");
+}
+
 function trapFocus(e) {
-  const sheet = $("#bookingSheet");
+  const sheet = $(".booking-sheet.open");
   if (!sheet?.classList.contains("open") || e.key !== "Tab") return;
   const focusable = $$('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])', sheet)
     .filter(el => !el.disabled && el.offsetParent !== null);
@@ -587,9 +659,26 @@ document.addEventListener("DOMContentLoaded", () => {
     openSheet();
   });
 
+  document.addEventListener("click", e => {
+    const trigger = e.target.closest("[data-branch-action]");
+    if (!trigger) return;
+    e.preventDefault();
+    const p = trigger.dataset.problemValue || "";
+    if (p) updateQuickResult(p, false);
+    openBranchActionSheet(trigger.dataset.branchAction, p);
+  });
+
+  $$("[data-branch-choice]").forEach(button => {
+    button.addEventListener("click", () => runBranchAction(button.dataset.branchChoice));
+  });
+
   $$("[data-close-booking]").forEach(el => el.addEventListener("click", closeSheet));
+  $$("[data-close-branch-action]").forEach(el => el.addEventListener("click", closeBranchActionSheet));
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeSheet();
+    if (e.key === "Escape") {
+      closeSheet();
+      closeBranchActionSheet();
+    }
     trapFocus(e);
   });
 
