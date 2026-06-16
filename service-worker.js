@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v47-branch-call-whatsapp-selector";
+const CACHE_NAME = "sri-sashti-v48-logo-splash-size";
 const ASSETS = [
   "/",
   "/index.html",

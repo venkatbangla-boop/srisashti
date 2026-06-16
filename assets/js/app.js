@@ -598,8 +598,8 @@ function initLogoSplash() {
       splash.classList.add("is-hiding");
       window.setTimeout(() => {
         splash.classList.add("is-clearing");
-        window.setTimeout(() => splash.remove(), reducedMotion ? 0 : 180);
-      }, reducedMotion ? 0 : 120);
+        window.setTimeout(() => splash.remove(), reducedMotion ? 0 : 160);
+      }, reducedMotion ? 0 : 90);
     }, delay);
   }
 
