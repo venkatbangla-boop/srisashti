@@ -1,10 +1,13 @@
-const CACHE_NAME = "sri-sashti-v39-treatment-card-corrections";
+const CACHE_NAME = "sri-sashti-v40-favicon-search";
 const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
   "/assets/css/styles.css",
   "/assets/js/app.js",
+  "/favicon.ico",
+  "/favicon-48x48.png",
+  "/favicon-96x96.png",
   "/assets/images/gallery/clinic-view-consultation-area.webp",
   "/assets/images/gallery/clinic-view-exercise-guidance.webp",
   "/assets/images/gallery/gallery-back-pain-care.webp",
@@ -44,6 +47,8 @@ const ASSETS = [
   "/assets/icons/icon-512.png",
   "/assets/icons/icon-96.png",
   "/assets/icons/apple-touch-icon.png",
+  "/assets/icons/favicon-48x48.png",
+  "/assets/icons/favicon-96x96.png",
   "/assets/icons/pwa/icon-192.png",
   "/assets/icons/pwa/icon-512.png",
   "/assets/icons/pwa/icon-96.png",
@@ -59,8 +64,7 @@ const ASSETS = [
   "/assets/icons/ui/branch.svg",
   "/assets/icons/ui/gallery.svg",
   "/assets/icons/ui/home-exercise.svg",
-  "/assets/icons/ui/trust-badge.svg",
-  "/favicon.ico"
+  "/assets/icons/ui/trust-badge.svg"
 ];
 
 self.addEventListener("install", event => {
