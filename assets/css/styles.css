@@ -896,7 +896,7 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   margin:0 auto;
   max-height:520px;
   object-fit:cover;
-  object-position:center top;
+  object-position:center 16%;
   border-radius:28px 28px 0 0;
 }
 .doctor-floating{
@@ -929,6 +929,13 @@ h3{margin:.2rem 0;letter-spacing:-.02em}
   padding:8px 10px;
   border-radius:999px;
   font-size:.84rem;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+.doctor-profile-link{
+  min-height:44px;
+  padding:0 14px;
+  font-size:.9rem;
 }
 .doctor-metrics{
   display:grid;

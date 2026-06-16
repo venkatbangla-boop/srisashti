@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v40-favicon-search";
+const CACHE_NAME = "sri-sashti-v41-doctor-linkedin-profile";
 const ASSETS = [
   "/",
   "/index.html",
