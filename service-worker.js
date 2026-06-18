@@ -1,9 +1,14 @@
-const CACHE_NAME = "sri-sashti-v49-branch-action-buttons";
+const CACHE_NAME = "sri-sashti-v51-hidden-branch-seo-pages";
 const ASSETS = [
   "/",
   "/index.html",
+  "/palladam-physiotherapy-clinic/",
+  "/palladam-physiotherapy-clinic/index.html",
+  "/senjeri-pirivu-physiotherapy-clinic/",
+  "/senjeri-pirivu-physiotherapy-clinic/index.html",
   "/manifest.webmanifest",
   "/assets/css/styles.css",
+  "/assets/css/branch-seo.css",
   "/assets/js/app.js",
   "/assets/videos/sashti-logo-motion.mp4",
   "/assets/videos/sashti-logo-poster.webp",

@@ -1,0 +1,151 @@
+.branch-seo-page{
+  padding-bottom:0;
+}
+
+.branch-seo-page .site-header{
+  position:static;
+}
+
+.branch-seo-page .navrow{
+  justify-content:space-between;
+}
+
+.branch-seo-page .brand{
+  margin-right:0;
+}
+
+.branch-seo-main{
+  max-width:var(--max);
+  margin:auto;
+  padding:48px 18px 0;
+}
+
+.branch-hero{
+  display:grid;
+  gap:22px;
+  align-items:center;
+  padding:36px 0 44px;
+}
+
+.branch-hero h1{
+  max-width:780px;
+  font-size:clamp(2.2rem,7vw,4.4rem);
+}
+
+.branch-hero p{
+  max-width:680px;
+  margin:0 0 18px;
+  color:var(--ink-soft);
+  font-size:1.03rem;
+}
+
+.branch-hero-card,
+.branch-info-card{
+  background:linear-gradient(180deg,#ffffff,#fbfffd);
+  border:1px solid var(--line);
+  border-radius:28px;
+  box-shadow:var(--shadow-soft);
+}
+
+.branch-hero-card{
+  padding:18px;
+}
+
+.branch-hero-card img{
+  width:100%;
+  border-radius:22px;
+  aspect-ratio:4/3;
+  object-fit:cover;
+}
+
+.branch-hero-card dl{
+  display:grid;
+  gap:8px;
+  margin:16px 0 0;
+}
+
+.branch-hero-card div{
+  display:grid;
+  gap:2px;
+}
+
+.branch-hero-card dt{
+  color:var(--green);
+  font-size:.75rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.branch-hero-card dd{
+  margin:0;
+  color:var(--ink);
+  font-weight:800;
+}
+
+.branch-actions{
+  max-width:520px;
+}
+
+.branch-info-grid{
+  display:grid;
+  gap:14px;
+  padding-bottom:48px;
+}
+
+.branch-info-card{
+  padding:18px;
+}
+
+.branch-info-card h2{
+  font-size:clamp(1.45rem,5vw,2.25rem);
+}
+
+.branch-info-card p{
+  color:var(--ink-soft);
+  margin:8px 0 0;
+}
+
+.service-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:16px 0 0;
+  padding:0;
+  list-style:none;
+}
+
+.service-list li{
+  border:1px solid rgba(14,116,104,.18);
+  border-radius:999px;
+  padding:8px 11px;
+  background:#fff;
+  color:var(--green-strong);
+  font-weight:900;
+  font-size:.9rem;
+}
+
+.branch-faq{
+  max-width:var(--max);
+  margin:auto;
+}
+
+.branch-seo-page .footer{
+  padding-bottom:46px;
+}
+
+@media (max-width:520px){
+  .branch-seo-page .branch-actions{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (min-width:760px){
+  .branch-hero{
+    grid-template-columns:1.2fr .8fr;
+  }
+
+  .branch-info-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
