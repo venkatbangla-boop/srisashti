@@ -694,8 +694,11 @@ function initIdleLogoSaver() {
     return;
   }
 
-  // Before production push, change IDLE_SAVER_TEST_MODE to false.
-  const IDLE_SAVER_TEST_MODE = true;
+  if (window.__idleLogoSaverCleanup) {
+    window.__idleLogoSaverCleanup();
+  }
+
+  const IDLE_SAVER_TEST_MODE = false;
   const IDLE_SAVER_DESKTOP_DELAY = IDLE_SAVER_TEST_MODE ? 5000 : 60000;
   const IDLE_SAVER_MOBILE_DELAY = IDLE_SAVER_TEST_MODE ? 7000 : 75000;
   const IDLE_SAVER_MAX_VISIBLE = 12000;
@@ -715,13 +718,10 @@ function initIdleLogoSaver() {
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
-    video.loop = false;
-    video.removeAttribute("loop");
+    video.loop = true;
+    video.setAttribute("loop", "");
     video.addEventListener("loadeddata", () => saver.classList.remove("video-failed"));
     video.addEventListener("error", () => saver.classList.add("video-failed"));
-    video.addEventListener("ended", () => {
-      video.pause();
-    });
   } else {
     saver.classList.add("video-failed");
   }
@@ -796,8 +796,8 @@ function initIdleLogoSaver() {
       video.muted = true;
       video.defaultMuted = true;
       video.playsInline = true;
-      video.loop = false;
-      video.removeAttribute("loop");
+      video.loop = true;
+      video.setAttribute("loop", "");
       try {
         video.currentTime = 0;
       } catch (error) {
@@ -843,18 +843,30 @@ function initIdleLogoSaver() {
     restart();
   }
 
-  ["mousemove", "scroll", "touchstart", "pointerdown", "keydown", "click", "focusin", "input"].forEach(eventName => {
-    window.addEventListener(eventName, activity, { passive:true });
+  const activityEvents = ["mousemove", "mousedown", "scroll", "touchstart", "touchmove", "pointerdown", "pointermove", "keydown", "click", "focusin", "input"];
+  const listenerOptions = { passive:true };
+  activityEvents.forEach(eventName => {
+    window.addEventListener(eventName, activity, listenerOptions);
   });
 
-  document.addEventListener("visibilitychange", () => {
+  const onVisibilityChange = () => {
     if (document.hidden) {
       hide();
       clearTimeout(idleTimer);
     } else {
       restart();
     }
-  });
+  };
+  document.addEventListener("visibilitychange", onVisibilityChange);
+
+  window.__idleLogoSaverCleanup = function () {
+    clearTimeout(idleTimer);
+    clearTimeout(hideTimer);
+    activityEvents.forEach(eventName => {
+      window.removeEventListener(eventName, activity, listenerOptions);
+    });
+    document.removeEventListener("visibilitychange", onVisibilityChange);
+  };
 
   window.showIdleLogoSaverTest = function () {
     sessionStorage.setItem(COUNT_KEY, "0");
@@ -868,8 +880,10 @@ function initIdleLogoSaver() {
 
     if (video && !prefersReducedMotion()) {
       video.muted = true;
-      video.loop = false;
-      video.removeAttribute("loop");
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.loop = true;
+      video.setAttribute("loop", "");
       try {
         video.currentTime = 0;
       } catch (error) {

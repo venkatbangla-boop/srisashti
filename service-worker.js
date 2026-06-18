@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v56-screensaver-blend";
+const CACHE_NAME = "sri-sashti-v57-mobile-screensaver";
 const ASSETS = [
   "/",
   "/index.html",

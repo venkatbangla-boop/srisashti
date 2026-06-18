@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "node -e \"const fs=require('fs'); ['index.html','assets/css/styles.css','assets/js/app.js','service-worker.js'].forEach(file=>fs.accessSync(file)); console.log('Static site build check passed')\"",
     "dev": "serve . -l 4173",
     "start": "npx serve ."
   },
