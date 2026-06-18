@@ -685,6 +685,211 @@ function initLogoSplash() {
   closeSplash(1500);
 }
 
+function initIdleLogoSaver() {
+  console.info("[IdleSaver] initialized");
+
+  const saver = document.getElementById("idleLogoSaver");
+  if (!saver) {
+    console.warn("[IdleSaver] overlay not found");
+    return;
+  }
+
+  // Before production push, change IDLE_SAVER_TEST_MODE to false.
+  const IDLE_SAVER_TEST_MODE = true;
+  const IDLE_SAVER_DESKTOP_DELAY = IDLE_SAVER_TEST_MODE ? 5000 : 60000;
+  const IDLE_SAVER_MOBILE_DELAY = IDLE_SAVER_TEST_MODE ? 7000 : 75000;
+  const IDLE_SAVER_MAX_VISIBLE = 12000;
+  const SESSION_LIMIT = 2;
+  const COUNT_KEY = "sashtiIdleSaverCount";
+
+  let idleTimer = null;
+  let hideTimer = null;
+  let isVisible = false;
+  const video = saver.querySelector("video");
+
+  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+  const delay = () => isMobile() ? IDLE_SAVER_MOBILE_DELAY : IDLE_SAVER_DESKTOP_DELAY;
+  const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (video) {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = false;
+    video.removeAttribute("loop");
+    video.addEventListener("loadeddata", () => saver.classList.remove("video-failed"));
+    video.addEventListener("error", () => saver.classList.add("video-failed"));
+    video.addEventListener("ended", () => {
+      video.pause();
+    });
+  } else {
+    saver.classList.add("video-failed");
+  }
+
+  function getCount() {
+    return Number(sessionStorage.getItem(COUNT_KEY) || "0");
+  }
+
+  function setCount(value) {
+    sessionStorage.setItem(COUNT_KEY, String(value));
+  }
+
+  function isActuallyVisible(el) {
+    if (!el) return false;
+    const styles = window.getComputedStyle(el);
+    return styles.display !== "none" && styles.visibility !== "hidden" && Number(styles.opacity) !== 0;
+  }
+
+  function hasActiveBlockingUi() {
+    const selectors = [
+      "#bookingSheet[aria-hidden='false']",
+      "#branchActionSheet[aria-hidden='false']",
+      "#branchSelector[aria-hidden='false']",
+      ".booking-sheet.open",
+      ".booking-sheet.is-open",
+      ".branch-action-sheet.open",
+      ".branch-action-sheet.is-open",
+      ".branch-selector.open",
+      ".branch-selector.is-open",
+      "[role='dialog'][aria-hidden='false']",
+      "dialog[open]"
+    ];
+
+    return selectors.some(selector => isActuallyVisible(document.querySelector(selector)));
+  }
+
+  function isTypingTarget(target) {
+    if (!target) return false;
+    const tag = target.tagName;
+    return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable;
+  }
+
+  function canShow() {
+    let blockedReason = "";
+    if (document.hidden) blockedReason = "document hidden";
+    else if (getCount() >= SESSION_LIMIT) blockedReason = "session limit";
+    else if (hasActiveBlockingUi()) blockedReason = "active blocking ui";
+    else if (isTypingTarget(document.activeElement)) blockedReason = "typing target focused";
+
+    if (blockedReason) {
+      console.info("[IdleSaver] blocked", blockedReason);
+      console.info("[IdleSaver] canShow", false);
+      return false;
+    }
+    console.info("[IdleSaver] canShow", true);
+    return true;
+  }
+
+  function show() {
+    if (!canShow()) {
+      restart();
+      return;
+    }
+
+    console.info("[IdleSaver] showing");
+    isVisible = true;
+    setCount(getCount() + 1);
+    saver.classList.add("is-visible");
+    saver.setAttribute("aria-hidden", "false");
+
+    if (video && !prefersReducedMotion()) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.loop = false;
+      video.removeAttribute("loop");
+      try {
+        video.currentTime = 0;
+      } catch (error) {
+        // Metadata may not be ready yet; playback can still start.
+      }
+      video.play().catch(() => {
+        console.warn("[IdleSaver] video play failed");
+        saver.classList.add("video-failed");
+      });
+    } else if (prefersReducedMotion()) {
+      saver.classList.add("video-failed");
+    }
+
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, IDLE_SAVER_MAX_VISIBLE);
+  }
+
+  function hide() {
+    if (!isVisible) return;
+    console.info("[IdleSaver] hiding");
+    isVisible = false;
+    saver.classList.remove("is-visible");
+    saver.setAttribute("aria-hidden", "true");
+
+    if (video) video.pause();
+
+    clearTimeout(hideTimer);
+    restart();
+  }
+
+  function restart() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(show, delay());
+    console.info("[IdleSaver] timer started", delay());
+  }
+
+  function activity(event) {
+    if (event && isTypingTarget(event.target)) {
+      restart();
+      return;
+    }
+    hide();
+    restart();
+  }
+
+  ["mousemove", "scroll", "touchstart", "pointerdown", "keydown", "click", "focusin", "input"].forEach(eventName => {
+    window.addEventListener(eventName, activity, { passive:true });
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      hide();
+      clearTimeout(idleTimer);
+    } else {
+      restart();
+    }
+  });
+
+  window.showIdleLogoSaverTest = function () {
+    sessionStorage.setItem(COUNT_KEY, "0");
+    if (!saver) {
+      console.warn("[IdleSaver] overlay not found");
+      return;
+    }
+    saver.classList.add("is-visible");
+    saver.setAttribute("aria-hidden", "false");
+    isVisible = true;
+
+    if (video && !prefersReducedMotion()) {
+      video.muted = true;
+      video.loop = false;
+      video.removeAttribute("loop");
+      try {
+        video.currentTime = 0;
+      } catch (error) {
+        // Metadata may not be ready yet; playback can still start.
+      }
+      video.play().catch(() => console.warn("[IdleSaver] video play failed"));
+    } else if (prefersReducedMotion()) {
+      saver.classList.add("video-failed");
+    }
+
+    console.info("[IdleSaver] manual test shown");
+  };
+
+  restart();
+
+  if (new URLSearchParams(window.location.search).get("idleTest") === "1") {
+    setTimeout(() => window.showIdleLogoSaverTest?.(), 2000);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initLogoSplash();
   hydrateIcons();
@@ -807,6 +1012,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateQuickResult("Back Pain Care", false);
   updateInstallButtons();
   initAutoGalleries();
+  initIdleLogoSaver();
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js").catch(console.error);

@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "dev": "serve . -l 4173",
     "start": "npx serve ."
   },
   "devDependencies": {

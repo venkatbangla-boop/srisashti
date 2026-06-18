@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v51-hidden-branch-seo-pages";
+const CACHE_NAME = "sri-sashti-v56-screensaver-blend";
 const ASSETS = [
   "/",
   "/index.html",
@@ -10,6 +10,7 @@ const ASSETS = [
   "/assets/css/styles.css",
   "/assets/css/branch-seo.css",
   "/assets/js/app.js",
+  "/assets/videos/sashti-logo-motion.webm",
   "/assets/videos/sashti-logo-motion.mp4",
   "/assets/videos/sashti-logo-poster.webp",
   "/favicon.ico",
