@@ -39,6 +39,12 @@ const guides = {
     "Pre and Post Operative Rehabilitation": ["Pre and Post Operative Rehabilitation", "Physiotherapy helps with stiffness, weakness, mobility and gradual functional recovery before and after surgery."],
     "Bell's palsy": ["Bell's palsy care", "Assessment-based facial stimulation and physiotherapy support may be used to help facial muscle activation, comfort and guided recovery."],
     "Facial Palsy & Neuro Care": ["Facial Palsy & Neuro Care", "Assessment-based physiotherapy support may be used for facial palsy, nerve-related weakness and guided movement recovery."],
+    "Prenatal care": ["Prenatal Care", "Gentle pregnancy-safe exercise guidance may support posture, pelvic control and comfort when advised after assessment."],
+    "Prenatal Care": ["Prenatal Care", "Gentle pregnancy-safe exercise guidance may support posture, pelvic control and comfort when advised after assessment."],
+    "Postnatal care": ["Postnatal Care", "Supportive postnatal physiotherapy may help with core recovery, posture, pelvic floor awareness and safe return to daily activity."],
+    "Postnatal Care": ["Postnatal Care", "Supportive postnatal physiotherapy may help with core recovery, posture, pelvic floor awareness and safe return to daily activity."],
+    "Pelvic Floor / Urinary Incontinence Care": ["Urinary Incontinence & Pelvic Floor Care", "Pelvic floor and core exercise guidance may support bladder control and confidence after proper assessment."],
+    "Urinary Incontinence & Pelvic Floor Care": ["Urinary Incontinence & Pelvic Floor Care", "Pelvic floor and core exercise guidance may support bladder control and confidence after proper assessment."],
     "Other": ["Physiotherapy consultation", "Send your problem details on WhatsApp. The clinic will guide the suitable branch and appointment timing."]
   },
   ta: {
@@ -65,6 +71,12 @@ const guides = {
     "Pre and Post Operative Rehabilitation": ["அறுவை சிகிச்சைக்கு முன் மற்றும் பின் மறுவாழ்வு", "Surgery முன் மற்றும் பின் stiffness, weakness மற்றும் mobility recovery-க்கு physiotherapy support."],
     "Bell's palsy": ["பெல்ஸ் பால்ஸி பராமரிப்பு", "Assessment அடிப்படையில் facial stimulation மற்றும் physiotherapy support மூலம் முக தசை செயல்பாடு, நிம்மதி மற்றும் guided recovery-க்கு உதவி வழங்கப்படலாம்."],
     "Facial Palsy & Neuro Care": ["முக நரம்பு பலவீனம் & நரம்பியல் பராமரிப்பு", "Assessment அடிப்படையில் facial palsy, nerve-related weakness மற்றும் guided movement recovery-க்கு physiotherapy support வழங்கப்படலாம்."],
+    "Prenatal care": ["கர்ப்பகால பராமரிப்பு", "மதிப்பீட்டுக்குப் பிறகு, கர்ப்பகால உடல் நிலை மற்றும் சௌகரியத்திற்கு மென்மையான பயிற்சி வழிகாட்டல்."],
+    "Prenatal Care": ["கர்ப்பகால பராமரிப்பு", "மதிப்பீட்டுக்குப் பிறகு, கர்ப்பகால உடல் நிலை மற்றும் சௌகரியத்திற்கு மென்மையான பயிற்சி வழிகாட்டல்."],
+    "Postnatal care": ["பிரசவத்திற்குப் பிந்தைய பராமரிப்பு", "பிரசவத்திற்குப் பிறகு core recovery, posture மற்றும் தினசரி செயல்பாடுகளுக்கு உதவும் பயிற்சி வழிகாட்டல்."],
+    "Postnatal Care": ["பிரசவத்திற்குப் பிந்தைய பராமரிப்பு", "பிரசவத்திற்குப் பிறகு core recovery, posture மற்றும் தினசரி செயல்பாடுகளுக்கு உதவும் பயிற்சி வழிகாட்டல்."],
+    "Pelvic Floor / Urinary Incontinence Care": ["சிறுநீர் கட்டுப்பாடு மற்றும் பெல்விக் ஃப்ளோர் பராமரிப்பு", "சரியான மதிப்பீட்டுக்குப் பிறகு சிறுநீர் கட்டுப்பாடு மற்றும் pelvic floor support க்கான பயிற்சி வழிகாட்டல்."],
+    "Urinary Incontinence & Pelvic Floor Care": ["சிறுநீர் கட்டுப்பாடு மற்றும் பெல்விக் ஃப்ளோர் பராமரிப்பு", "சரியான மதிப்பீட்டுக்குப் பிறகு சிறுநீர் கட்டுப்பாடு மற்றும் pelvic floor support க்கான பயிற்சி வழிகாட்டல்."],
     "Other": ["பிசியோதெரபி ஆலோசனை", "உங்கள் பிரச்சனையை WhatsApp-ல் அனுப்புங்கள். சரியான கிளை மற்றும் appointment timing guidance கிடைக்கும்."]
   }
 };

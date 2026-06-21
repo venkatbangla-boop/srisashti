@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v57-mobile-screensaver";
+const CACHE_NAME = "sri-sashti-v56-gallery-favicon-hardening";
 const ASSETS = [
   "/",
   "/index.html",
@@ -16,6 +16,9 @@ const ASSETS = [
   "/favicon.ico",
   "/favicon-48x48.png",
   "/favicon-96x96.png",
+  "/assets/images/prenatal-care-gallery.webp",
+  "/assets/images/postnatal-care-gallery.webp",
+  "/assets/images/urinary-incontinence-pelvic-floor-care-gallery.webp",
   "/assets/images/gallery/clinic-view-consultation-area.webp",
   "/assets/images/gallery/clinic-view-exercise-guidance.webp",
   "/assets/images/gallery/gallery-back-pain-care.webp",
@@ -55,6 +58,7 @@ const ASSETS = [
   "/assets/icons/icon-512.png",
   "/assets/icons/icon-96.png",
   "/assets/icons/apple-touch-icon.png",
+  "/assets/icons/favicon.ico",
   "/assets/icons/favicon-48x48.png",
   "/assets/icons/favicon-96x96.png",
   "/assets/icons/pwa/icon-192.png",
