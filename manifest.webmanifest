@@ -1,0 +1,39 @@
+{
+  "name": "Sashti Physio",
+  "short_name": "Sashti Physio",
+  "description": "Book physiotherapy care at Sri Sashti Physiotherapy Clinic in Palladam and Senjeri Pirivu.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#006b5f",
+  "icons": [
+    {
+      "src": "/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book Appointment",
+      "short_name": "Book",
+      "url": "/#quick",
+      "icons": [
+        {
+          "src": "/assets/icons/pwa/icon-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
