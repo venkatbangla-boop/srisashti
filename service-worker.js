@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v56-gallery-favicon-hardening";
+const CACHE_NAME = "sri-sashti-v58-gallery-audit-placement-fix";
 const ASSETS = [
   "/",
   "/index.html",
