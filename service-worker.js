@@ -1,4 +1,4 @@
-const CACHE_NAME = "sri-sashti-v60-pwa-install-disabled";
+const CACHE_NAME = "sri-sashti-v62-womens-health-image-fix";
 const ASSETS = [
   "/",
   "/index.html",
